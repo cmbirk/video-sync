@@ -1,7 +1,7 @@
 import debug from 'debug'
 import http from 'http'
 
-import config from 'config'
+import config from './config'
 import express from './expressApp'
 import socket from './socket'
 
