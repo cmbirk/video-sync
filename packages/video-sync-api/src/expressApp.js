@@ -1,13 +1,13 @@
 import express from 'express'
 import path from 'path'
 
-const users = []
-const connections = []
-const rooms = []
+// const users = []
+// const connections = []
+// const rooms = []
 
-const userrooms = {}
+// const userrooms = {}
 
-let givenRoom = ''
+// let givenRoom = ''
 
 module.exports = () => {
   const app = express()

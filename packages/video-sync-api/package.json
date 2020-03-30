@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf lib; babel src -d lib",
+    "dev": "nodemon --watch ./src --exec 'yarn build && yarn start'",
     "lint": "eslint ./src --ext .js,.jsx",
     "start": "DEBUG=videoSync:* node lib/server.js"
   },
@@ -19,7 +20,8 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.1"
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "nodemon": "^2.0.2"
   },
   "dependencies": {
     "debug": "^4.1.1",
