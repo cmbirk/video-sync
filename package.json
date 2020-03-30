@@ -5,7 +5,9 @@
   "repository": "git@github.com:cmbirk/video-sync.git",
   "author": "Chris Birk <cmbirk@gmail.com>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "DEBUG=videoSync:* lerna run dev"
+  },
   "devDependencies": {
     "jest": "^25.2.4",
     "nodemon": "^2.0.2"
