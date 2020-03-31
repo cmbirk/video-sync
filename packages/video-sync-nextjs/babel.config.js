@@ -7,6 +7,8 @@ module.exports = {
         root: './src',
         alias: {
           '@components': './src/components',
+          '@config': './next.config.js',
+          '@layout': './src/layout',
         },
       },
     ],
