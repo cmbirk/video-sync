@@ -1,8 +1,7 @@
 import debug from 'debug'
 import http from 'http'
 import express from 'express'
-import request from 'request-promise'
-import path from 'path'
+// import path from 'path'
 import socketIO from 'socket.io'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -32,29 +31,50 @@ app.use((req, res, next) => {
 
 const server = http.createServer(app)
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello!' })
+})
+
 app.get('/rooms', (req, res) => {
   const newRoom = uuidv4()
-
-  console.log(newRoom)
 
   res.json({ newRoom })
 })
 
-// app.get('/rooms/:room/join', (req, res) => {
-//   givenRoom = req.params.room
-
-//   res.send({ })
-// })
-
 const io = socketIO(server)
 
 io.on('connection', (socket) => {
-  console.log('a user connected')
+  socket.on('joined room', (data) => {
+    const { roomId } = data
 
-  socket.emit('now', { message: 'Hello!' })
+    const room = io.sockets.adapter.rooms[roomId]
 
-  socket.emit('set id', {
-    id: givenRoom,
+    if (room.length === 0) {
+      rooms.push({ id: roomId, host: socket.id })
+      console.log(`Setting ${socket.id} host of room ${roomId}`)
+    }
+
+    socket.join(roomId)
+
+    console.log(`${room.length + 1} clients in room ${roomId}`)
+
+    rooms.push({ id: roomId })
+  })
+
+  socket.on('video url set', (data) => {
+    const { roomId, videoUrl } = data
+
+    console.log(`Video url ${videoUrl} set for room ${roomId}`)
+
+    io.to(roomId).emit('set video url', { videoUrl })
+  })
+
+  socket.on('seek set', (data) => {
+    const { seconds, roomId } = data
+
+    console.log(`setting seek to ${seconds}`)
+
+    socket.broadcast.to(roomId).emit('set seek', { seconds })
   })
 })
 
