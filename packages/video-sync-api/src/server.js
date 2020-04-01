@@ -91,6 +91,22 @@ io.on('connection', (socket) => {
 
     socket.broadcast.to(roomId).emit('set seek', { seconds })
   })
+
+  socket.on('play set', (data) => {
+    const { currentTime, roomId } = data
+
+    console.log(`Playing with ${currentTime} time`)
+
+    socket.broadcast.to(roomId).emit('set play', { currentTime })
+  })
+
+  socket.on('pause set', (data) => {
+    const { currentTime, roomId } = data
+
+    console.log(`Pausing with ${currentTime} time`)
+
+    socket.broadcast.to(roomId).emit('set pause', { currentTime })
+  })
 })
 
 server.listen(port, () => {
