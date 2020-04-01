@@ -39,6 +39,8 @@ app.get('/rooms', (req, res) => {
 
 const io = socketIO(server)
 
+io.origins('*:*')
+
 io.on('connection', (socket) => {
   userRooms[socket.id] = []
 
