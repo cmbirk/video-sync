@@ -2,6 +2,6 @@ require('dotenv').config()
 
 module.exports = {
   env: {
-    apiurl: process.env.apiurl,
+    apiurl: 'video-sync-272521.appspot.com',
   },
 }
