@@ -19,14 +19,6 @@ class VideoSync extends App {
       </UserContext.Provider>
     )
   }
-
-  componentDidMount() {
-    this.socket = io('localhost:3001')
-
-    this.socket.on('now', (data) => {
-      console.log(data)
-    })
-  }
 }
 
 export default VideoSync

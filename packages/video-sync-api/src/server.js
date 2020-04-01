@@ -9,13 +9,9 @@ import config from './config'
 
 const log = debug('videoSync:server')
 
-const users = []
-const connections = []
 const rooms = []
 
-const userrooms = {}
-
-let givenRoom = ''
+const userRooms = {}
 
 const {
   port,
@@ -44,21 +40,38 @@ app.get('/rooms', (req, res) => {
 const io = socketIO(server)
 
 io.on('connection', (socket) => {
+  userRooms[socket.id] = []
+
   socket.on('joined room', (data) => {
     const { roomId } = data
 
-    const room = io.sockets.adapter.rooms[roomId]
+    let room = io.sockets.adapter.rooms[roomId]
 
-    if (room.length === 0) {
+    // If this is a new room
+    if (!room || room.length === 0) {
       rooms.push({ id: roomId, host: socket.id })
       console.log(`Setting ${socket.id} host of room ${roomId}`)
+      socket.emit('set host', { hostId: socket.id })
     }
 
     socket.join(roomId)
+    userRooms[socket.id].push(roomId)
 
-    console.log(`${room.length + 1} clients in room ${roomId}`)
+    room = io.sockets.adapter.rooms[roomId]
 
-    rooms.push({ id: roomId })
+    console.log(`${room.length} clients in room ${roomId}`)
+  })
+
+  socket.on('disconnect', () => {
+    // Check user host status for rooms
+    // Transition hosts in rooms
+    // Remove user from rooms
+    // Remove any empty rooms
+    // Check rooms still have users
+    console.log(`Disconnecting ${socket.id} from ${userRooms[socket.id].length} rooms`)
+    console.log(userRooms[socket.id])
+
+    delete userRooms[socket.id]
   })
 
   socket.on('video url set', (data) => {
