@@ -24,7 +24,7 @@ class Room extends Component {
 
       this.setState({ roomId })
 
-      this.socket = io('localhost:3001')
+      this.socket = io(process.env.apiurl)
 
       this.socket.emit('joined room', {
         roomId,
