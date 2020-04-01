@@ -16,11 +16,17 @@ class Player extends Component {
   }
 
   handlePause = () => {
+    const { handlePause } = this.props
     console.log('Paused.')
+
+    handlePause({ currentTime: this.player.getCurrentTime() })
   }
 
   handlePlay = () => {
+    const { handlePlay } = this.props
     console.log('Played.')
+
+    handlePlay({ currentTime: this.player.getCurrentTime() })
   }
 
   handleStart = () => {
@@ -60,7 +66,6 @@ class Player extends Component {
           onStart={this.handleStart}
           onReady={this.handleReady}
           onProgress={this.handleProgress}
-          seekTo={seekTo}
         />
       </div>
     )

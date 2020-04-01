@@ -9,6 +9,7 @@ class Room extends Component {
   state = {
     hostId: null,
     player: null,
+    playing: false,
     username:'',
     videoUrl: '',
   }
@@ -45,6 +46,24 @@ class Room extends Component {
 
         this.state.player.seekTo(seconds)
       })
+
+      this.socket.on('set pause', (data) => {
+        const { currentTime } = data
+
+        console.log('Pausing.')
+
+        this.state.player.seekTo(currentTime)
+        this.state.player.getInternalPlayer().pause()
+      })
+
+      this.socket.on('set play', (data) => {
+        const { currentTime } = data
+
+        console.log('Playing.')
+
+        this.state.player.seekTo(currentTime)
+        this.state.player.getInternalPlayer().play()
+      })
     }
   }
 
@@ -64,6 +83,32 @@ class Room extends Component {
 
     this.socket.emit('seek set', {
       seconds,
+      roomId,
+    })
+  }
+
+  handlePause = ({ currentTime }) => {
+    if (!this.isHost()) return false
+
+    const { roomId } = this.state
+
+    console.log('pause set.')
+
+    this.socket.emit('pause set', {
+      currentTime,
+      roomId,
+    })
+  }
+
+  handlePlay = ({ currentTime }) => {
+    if (!this.isHost()) return false
+
+    const { roomId } = this.state
+
+    console.log('play set.')
+
+    this.socket.emit('play set', {
+      currentTime,
       roomId,
     })
   }
@@ -103,9 +148,8 @@ class Room extends Component {
 
   render() {
     const { router } = this.props
-    const { hostId, username, videoUrl } = this.state
+    const { hostId, playing, username, videoUrl } = this.state
     const { roomId } = router.query
-
 
     return (
       <Layout>
@@ -135,7 +179,10 @@ class Room extends Component {
               <Player
                 isHost={this.isHost()}
                 url={videoUrl}
+                playing={playing}
                 setPlayer={this.setPlayer}
+                handlePause={this.handlePause}
+                handlePlay={this.handlePlay}
                 handleSeek={this.handleSeek}
               />
             ) : (
