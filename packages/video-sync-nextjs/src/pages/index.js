@@ -13,7 +13,7 @@ const Home = () => {
   const getRoomId = async () => {
     const apiurl = process.env.apiurl
 
-    console.log(apiURL)
+    console.log(apiurl)
 
     const res = await fetch(`${apiurl}/rooms`)
 
