@@ -11,11 +11,11 @@ const Home = () => {
   }
 
   const getRoomId = async () => {
-    const apiURL = process.env.apiURL
+    const apiurl = process.env.apiurl
 
     console.log(apiURL)
 
-    const res = await fetch(`${apiURL}/rooms`)
+    const res = await fetch(`${apiurl}/rooms`)
 
     const data = await res.json()
 
