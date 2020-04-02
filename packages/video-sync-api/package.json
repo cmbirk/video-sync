@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "rm -rf lib; babel src -d lib",
-    "deploy": "gcloud app deploy",
+    "deploy": "time gcloud app deploy",
     "dev": "nodemon --watch ./src --exec 'yarn build && yarn start'",
     "lint": "eslint ./src --ext .js,.jsx",
     "start": "DEBUG=videoSync:* node lib/server.js"
