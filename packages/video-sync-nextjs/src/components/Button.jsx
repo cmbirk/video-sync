@@ -6,8 +6,9 @@ const sizes = {
   xl: 'py-5 px-16 text-lg',
 }
 
-const Button = ({ alt, children, className = '', onClick, size = 'default' }) => {
-  return (
+const Button = ({
+  alt, children, className = '', onClick, size = 'default',
+}) => (
     <button
       type="button"
       onClick={onClick}
@@ -23,7 +24,6 @@ const Button = ({ alt, children, className = '', onClick, size = 'default' }) =>
     >
       {children}
     </button>
-  )
-}
+)
 
 export default Button

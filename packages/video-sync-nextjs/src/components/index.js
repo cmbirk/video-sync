@@ -1,9 +1,9 @@
 import Player from './Player'
-import UsernameForm from './UsernameForm'
+import Username from './Username'
 import VideoForm from './VideoForm'
 
 export {
   Player,
-  UsernameForm,
+  Username,
   VideoForm,
 }

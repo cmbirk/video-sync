@@ -2,8 +2,9 @@ import React from 'react'
 
 import BrokenLink from '@icons/brokenLink'
 
-const SidebarHeader = ({ isConnected, roomId, title, toggleSidebar }) => {
-  return (
+const SidebarHeader = ({
+  isConnected, roomId, title, toggleSidebar,
+}) => (
     <div className="border-b flex justify-between">
 
       <button onClick={() => toggleSidebar()} className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150" aria-label="Open sidebar">
@@ -12,15 +13,14 @@ const SidebarHeader = ({ isConnected, roomId, title, toggleSidebar }) => {
         </svg>
       </button>
 
-      { isConnected ? null :
-        (
+      { isConnected ? null
+        : (
           <div className="mt-3 pr-4 blinking">
             <BrokenLink />
           </div>
         )
       }
     </div>
-  )
-}
+)
 
 export default SidebarHeader

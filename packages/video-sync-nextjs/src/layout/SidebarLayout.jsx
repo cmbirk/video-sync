@@ -13,7 +13,7 @@ class SidebarLayout extends Component {
     const { sidebarOpen } = this.state
 
     this.setState({
-      sidebarOpen: !sidebarOpen
+      sidebarOpen: !sidebarOpen,
     })
   }
 
@@ -25,7 +25,7 @@ class SidebarLayout extends Component {
       isHost,
       resetVideoUrl,
       roomId,
-      title
+      title,
     } = this.props
 
     const { sidebarOpen } = this.state
@@ -49,9 +49,9 @@ class SidebarLayout extends Component {
           />
           <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex="0">
             <div className="w-full bg-tiled border-l h-full">
-              {/*<!-- Replace with your content -->*/}
+              {/* <!-- Replace with your content --> */}
               {children}
-              {/*<!-- /End replace -->*/}
+              {/* <!-- /End replace --> */}
             </div>
           </main>
         </div>

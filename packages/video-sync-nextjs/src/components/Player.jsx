@@ -51,7 +51,9 @@ class Player extends Component {
   }
 
   render() {
-    const { isHost = false, url, seconds, seekTo } = this.props
+    const {
+      isHost = false, url, seconds, seekTo,
+    } = this.props
 
     return (
       <div className="flex items-center justify-center h-full">

@@ -4,13 +4,13 @@ const VideoForm = (props) => {
   const { onSubmit } = props
 
   const [inputs, setInputs] = useState({
-    videoUrl: ''
+    videoUrl: '',
   })
 
   const handleInputChange = (event) => {
     event.persist()
 
-    setInputs(inputs => ({...inputs, [event.target.name]: event.target.value }))
+    setInputs((inputs) => ({ ...inputs, [event.target.name]: event.target.value }))
   }
 
   const handleSubmit = (event) => {

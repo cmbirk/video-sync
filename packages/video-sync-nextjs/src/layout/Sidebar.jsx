@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 
+import { Username } from '@components'
+
 const Sidebar = ({
   canReset,
   isHost,
@@ -8,12 +10,10 @@ const Sidebar = ({
   roomId,
   sidebarOpen,
   toggleSidebar,
-}) => {
-
-  return (
+}) => (
     <>
       {/* <!-- Off-canvas menu for mobile --> */}
-      <div className={`${sidebarOpen ? '': 'hidden'}`}>
+      <div className={`${sidebarOpen ? '' : 'hidden'}`}>
         <div className="fixed inset-0 z-30 transition-opacity ease-linear duration-300">
           <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
         </div>
@@ -49,45 +49,30 @@ const Sidebar = ({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                   </svg>
                   Host: {isHost ? '✅' : '🚫'}
-                    { canReset ?
-                        (<a
+                    { canReset
+                      ? (<a
                           className="cursor-pointer text-xs italic ml-4"
                           onClick={() => {
                             resetVideoUrl()
                             toggleSidebar()
                           }}
                         >Reset Video Url</a>
-                        )
-                     : null
+                      )
+                      : null
                    }
                 </span>
               </nav>
             </div>
             <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-              <a href="#" className="flex-shrink-0 group block focus:outline-none">
-                <div className="flex items-center">
-                  <div>
-                    <img className="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-base leading-6 font-medium text-gray-700 group-hover:text-gray-900">
-                      Tom Cook
-                    </p>
-                    <p className="text-sm leading-5 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150">
-                      View profile
-                    </p>
-                  </div>
-                </div>
-              </a>
+              <Username />
             </div>
           </div>
           <div className="flex-shrink-0 w-14">
-            {/*<!-- Force sidebar to shrink to fit close icon -->*/}
+            {/* <!-- Force sidebar to shrink to fit close icon --> */}
           </div>
         </div>
       </div>
     </>
-  )
-}
+)
 
 export default Sidebar

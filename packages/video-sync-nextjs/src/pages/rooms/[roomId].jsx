@@ -10,11 +10,11 @@ class Room extends Component {
     hostId: null,
     player: null,
     playing: false,
-    username:'',
+    username: '',
     videoUrl: '',
   }
 
-  static async getInitialProps (ctx) {
+  static async getInitialProps(ctx) {
     return {}
   }
 
@@ -67,9 +67,7 @@ class Room extends Component {
     }
   }
 
-  isConnected = () => {
-    return this.socket && this.socket.connected
-  }
+  isConnected = () => this.socket && this.socket.connected
 
   isHost = () => {
     const { hostId } = this.state
@@ -80,7 +78,7 @@ class Room extends Component {
     return this.socket.id === hostId.replace('$', '')
   }
 
-  handleSeek = ({ seconds}) => {
+  handleSeek = ({ seconds }) => {
     if (!this.isHost()) return false
 
     const { roomId } = this.state
@@ -152,7 +150,9 @@ class Room extends Component {
 
   render() {
     const { router } = this.props
-    const { hostId, playing, username, videoUrl } = this.state
+    const {
+      hostId, playing, username, videoUrl,
+    } = this.state
     const { roomId } = router.query
 
     return (
@@ -173,9 +173,9 @@ class Room extends Component {
               handlePlay={this.handlePlay}
               handleSeek={this.handleSeek}
             />
-          ) : (
+        ) : (
             <VideoForm onSubmit={this.handleSubmit}/>
-          )
+        )
 
         }
       </SidebarLayout>

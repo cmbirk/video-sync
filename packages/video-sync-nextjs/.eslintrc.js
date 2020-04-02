@@ -3,10 +3,11 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
-    'jest/globals': true,
+    // 'jest/globals': true,
   },
   extends: [
     'airbnb-base',
+    'plugin:react/recommended',
     // 'plugin:flowtype/recommended',
   ],
   globals: {
@@ -22,12 +23,18 @@ module.exports = {
       },
     },
   ],
+  parser: 'babel-eslint',
   parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
     ecmaVersion: 2018,
   },
   plugins: [
+    'babel',
+    'react',
     // 'flowtype',
-    'jest',
+    // 'jest',
   ],
   rules: {
     semi: 'off'

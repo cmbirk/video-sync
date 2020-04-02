@@ -4,13 +4,13 @@ const UsernameForm = (props) => {
   const { onSubmit } = props
 
   const [inputs, setInputs] = useState({
-    username: ''
+    username: '',
   })
 
   const handleInputChange = (event) => {
     event.persist()
 
-    setInputs(inputs => ({...inputs, [event.target.name]: event.target.value }))
+    setInputs((inputs) => ({ ...inputs, [event.target.name]: event.target.value }))
   }
 
   const handleSubmit = (event) => {
