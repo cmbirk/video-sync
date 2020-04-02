@@ -22,7 +22,7 @@ const VideoForm = (props) => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-full">
       <div className="w-1/5"></div>
       <div className="w-3/5">
         <form onSubmit={handleSubmit}>

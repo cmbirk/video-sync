@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react'
 import { withRouter } from 'next/router'
 import io from 'socket.io-client'
 
-import Layout from '@layout/Layout'
+import SidebarLayout from '@layout/SidebarLayout'
 import { Player, VideoForm, UsernameForm } from '@components'
 
 class Room extends Component {
@@ -65,6 +65,10 @@ class Room extends Component {
         this.state.player.getInternalPlayer().play()
       })
     }
+  }
+
+  isConnected = () => {
+    return this.socket && this.socket.connected
   }
 
   isHost = () => {
@@ -152,46 +156,29 @@ class Room extends Component {
     const { roomId } = router.query
 
     return (
-      <Layout>
-        <div>
-          <div className="pl-8 pt-16 absolute">
-            Host: {this.isHost() ? '✅' : '🚫'}
-            { ( videoUrl && this.isHost() ) ?
-              (
-                <div>
-                  <a
-                    className="cursor-pointer text-blue-600"
-                    onClick={() => this.resetVideoUrl()}
-                  >Reset Video Url</a>
-                </div>
-              ) : null
-            }
-          </div>
-          <div>
-          {/*
-            <UsernameForm
-              onSubmit={this.handleUsernameSubmit}
+      <SidebarLayout
+        canReset={videoUrl && this.isHost()}
+        isConnected={this.isConnected()}
+        isHost={this.isHost()}
+        resetVideoUrl={this.resetVideoUrl}
+        roomId={roomId}
+      >
+        { videoUrl ? (
+            <Player
+              isHost={this.isHost()}
+              url={videoUrl}
+              playing={playing}
+              setPlayer={this.setPlayer}
+              handlePause={this.handlePause}
+              handlePlay={this.handlePlay}
+              handleSeek={this.handleSeek}
             />
-          */}
-          </div>
+          ) : (
+            <VideoForm onSubmit={this.handleSubmit}/>
+          )
 
-          { videoUrl ? (
-              <Player
-                isHost={this.isHost()}
-                url={videoUrl}
-                playing={playing}
-                setPlayer={this.setPlayer}
-                handlePause={this.handlePause}
-                handlePlay={this.handlePlay}
-                handleSeek={this.handleSeek}
-              />
-            ) : (
-              <VideoForm onSubmit={this.handleSubmit}/>
-            )
-
-          }
-        </div>
-      </Layout>
+        }
+      </SidebarLayout>
     )
   }
 }

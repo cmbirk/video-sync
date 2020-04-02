@@ -1,6 +1,6 @@
 import React from 'react'
-import Footer from './Footer'
-import Header from './Header'
+// import Footer from './Footer'
+// import Header from './Header'
 
 const Layout = ({ children }) => (
   <div id="wrapper" className="container mx-auto flex flex-col min-h-screen relative justify-center">

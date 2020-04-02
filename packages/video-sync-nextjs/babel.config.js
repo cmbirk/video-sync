@@ -8,6 +8,7 @@ module.exports = {
         alias: {
           '@components': './src/components',
           '@config': './next.config.js',
+          '@icons': './src/icons',
           '@layout': './src/layout',
         },
       },

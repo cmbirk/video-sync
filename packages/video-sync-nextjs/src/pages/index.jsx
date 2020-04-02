@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
-import Layout from '@layout/Layout'
+import HeroLayout from '@layout/HeroLayout'
 import Button from '@components/Button'
 
 const Home = () => {
@@ -12,6 +12,8 @@ const Home = () => {
 
   const getRoomId = async () => {
     const apiurl = process.env.apiurl
+
+    console.log(apiurl)
 
     console.log(apiurl)
 
@@ -25,7 +27,7 @@ const Home = () => {
   }
 
   return (
-    <Layout>
+    <HeroLayout>
       <Head>
         <title>Power Hour 🍻</title>
         <link rel="icon" href="/favicon.ico" />
@@ -39,9 +41,9 @@ const Home = () => {
             className="mt-8 sm:flex"
             onSubmit={setRoomId}
           >
-            <input aria-label="Email address" type="text" required class="appearance-none w-full px-5 py-3 border border-gray-300 text-base leading-6 rounded-md text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:shadow-outline focus:border-blue-300 transition duration-150 ease-in-out sm:max-w-xs" placeholder="Enter your room ID" />
-            <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-              <button class="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+            <input aria-label="Room Id" type="text" required className="appearance-none w-full px-5 py-3 border border-gray-300 text-base leading-6 rounded-md text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:shadow-outline focus:border-blue-300 transition duration-150 ease-in-out sm:max-w-xs" placeholder="Enter your room ID" />
+            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+              <button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
                 Go to room &gt;&gt;
               </button>
             </div>
@@ -54,7 +56,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </HeroLayout>
   )
 }
 

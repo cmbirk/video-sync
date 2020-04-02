@@ -54,7 +54,7 @@ class Player extends Component {
     const { isHost = false, url, seconds, seekTo } = this.props
 
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-full">
         <ReactPlayer
           ref={this.ref}
           url={url}
