@@ -1,5 +1,7 @@
 {
-  "env": {
-    "apiurl": "https://video-sync-272521.appspot.com"
+  "build": {
+    "env": {
+      "apiurl": "@apiurl"
+    }
   }
 }
