@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
+
+import PropTypes from 'prop-types'
 
 import { Username } from '@components'
 
@@ -74,5 +76,14 @@ const Sidebar = ({
       </div>
     </>
 )
+
+Sidebar.propTypes = {
+  canReset: PropTypes.bool,
+  isHost: PropTypes.bool,
+  resetVideoUrl: PropTypes.func,
+  roomId: PropTypes.string,
+  sidebarOpen: PropTypes.bool,
+  toggleSidebar: PropTypes.func,
+}
 
 export default Sidebar

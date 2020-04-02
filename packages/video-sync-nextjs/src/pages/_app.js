@@ -1,7 +1,6 @@
 import React from 'react'
 import App from 'next/app'
 import Head from 'next/head'
-import io from 'socket.io-client'
 import '../styles.css'
 import UserContext from '../contexts/UserContext'
 
