@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import PropTypes from 'prop-types'
+
 const VideoForm = (props) => {
   const { onSubmit } = props
 
@@ -10,7 +12,7 @@ const VideoForm = (props) => {
   const handleInputChange = (event) => {
     event.persist()
 
-    setInputs((inputs) => ({ ...inputs, [event.target.name]: event.target.value }))
+    setInputs((formInputs) => ({ ...formInputs, [event.target.name]: event.target.value }))
   }
 
   const handleSubmit = (event) => {
@@ -47,6 +49,10 @@ const VideoForm = (props) => {
       <div className="w-1/5"></div>
     </div>
   )
+}
+
+VideoForm.propTypes = {
+  onSubmit: PropTypes.func,
 }
 
 export default VideoForm

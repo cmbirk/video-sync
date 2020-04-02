@@ -1,9 +1,11 @@
 import React from 'react'
 
+import PropTypes from 'prop-types'
+
 import BrokenLink from '@icons/brokenLink'
 
 const SidebarHeader = ({
-  isConnected, roomId, title, toggleSidebar,
+  isConnected, toggleSidebar,
 }) => (
     <div className="border-b flex justify-between">
 
@@ -22,5 +24,10 @@ const SidebarHeader = ({
       }
     </div>
 )
+
+SidebarHeader.propTypes = {
+  isConnected: PropTypes.bool,
+  toggleSidebar: PropTypes.func,
+}
 
 export default SidebarHeader

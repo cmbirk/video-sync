@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+
+import PropTypes from 'prop-types'
 
 import Sidebar from '@layout/Sidebar'
 import SidebarHeader from '@layout/SidebarHeader'
@@ -58,6 +59,16 @@ class SidebarLayout extends Component {
       </div>
     )
   }
+}
+
+SidebarLayout.propTypes = {
+  canReset: PropTypes.bool,
+  children: PropTypes.node,
+  isConnected: PropTypes.bool,
+  isHost: PropTypes.bool,
+  resetVideoUrl: PropTypes.func,
+  roomId: PropTypes.string,
+  title: PropTypes.string,
 }
 
 export default SidebarLayout

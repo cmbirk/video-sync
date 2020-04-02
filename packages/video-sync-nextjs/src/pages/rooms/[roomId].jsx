@@ -1,9 +1,10 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import { withRouter } from 'next/router'
 import io from 'socket.io-client'
+import PropTypes from 'prop-types'
 
 import SidebarLayout from '@layout/SidebarLayout'
-import { Player, VideoForm, UsernameForm } from '@components'
+import { Player, VideoForm } from '@components'
 
 class Room extends Component {
   state = {
@@ -14,7 +15,7 @@ class Room extends Component {
     videoUrl: '',
   }
 
-  static async getInitialProps(ctx) {
+  static async getInitialProps(/* ctx */) {
     return {}
   }
 
@@ -50,16 +51,12 @@ class Room extends Component {
       this.socket.on('set pause', (data) => {
         const { currentTime } = data
 
-        console.log('Pausing.')
-
         this.state.player.seekTo(currentTime)
         this.state.player.getInternalPlayer().pause()
       })
 
       this.socket.on('set play', (data) => {
         const { currentTime } = data
-
-        console.log('Playing.')
 
         this.state.player.seekTo(currentTime)
         this.state.player.getInternalPlayer().play()
@@ -87,6 +84,8 @@ class Room extends Component {
       seconds,
       roomId,
     })
+
+    return seconds
   }
 
   handlePause = ({ currentTime }) => {
@@ -94,12 +93,12 @@ class Room extends Component {
 
     const { roomId } = this.state
 
-    console.log('pause set.')
-
     this.socket.emit('pause set', {
       currentTime,
       roomId,
     })
+
+    return currentTime
   }
 
   handlePlay = ({ currentTime }) => {
@@ -107,12 +106,12 @@ class Room extends Component {
 
     const { roomId } = this.state
 
-    console.log('play set.')
-
     this.socket.emit('play set', {
       currentTime,
       roomId,
     })
+
+    return currentTime
   }
 
   handleSubmit = (videoUrl) => {
@@ -123,6 +122,8 @@ class Room extends Component {
     this.setState({ videoUrl })
 
     this.socket.emit('video url set', { videoUrl, roomId })
+
+    return videoUrl
   }
 
   handleUsernameSubmit = (username) => {
@@ -135,13 +136,16 @@ class Room extends Component {
 
   resetVideoUrl = () => {
     if (!this.isHost()) {
-      console.info('Only the host can reset the player url')
+      // eslint-disable-next-line no-console
+      console.error('Only the host can reset the player url')
       return false
     }
 
     const { roomId } = this.state
 
     this.socket.emit('video url set', { videoUrl: '', roomId })
+
+    return null
   }
 
   setPlayer = (player) => {
@@ -151,7 +155,7 @@ class Room extends Component {
   render() {
     const { router } = this.props
     const {
-      hostId, playing, username, videoUrl,
+      playing, videoUrl,
     } = this.state
     const { roomId } = router.query
 
@@ -181,6 +185,14 @@ class Room extends Component {
       </SidebarLayout>
     )
   }
+}
+
+Room.propTypes = {
+  router: {
+    query: {
+      roomId: PropTypes.string,
+    },
+  },
 }
 
 export default withRouter(Room)

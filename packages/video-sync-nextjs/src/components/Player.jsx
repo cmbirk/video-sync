@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react'
 import ReactPlayer from 'react-player'
+import PropTypes from 'prop-types'
 
 class Player extends Component {
   handleError = (err) => {
@@ -52,7 +54,7 @@ class Player extends Component {
 
   render() {
     const {
-      isHost = false, url, seconds, seekTo,
+      isHost = false, url,
     } = this.props
 
     return (
@@ -72,6 +74,15 @@ class Player extends Component {
       </div>
     )
   }
+}
+
+Player.propTypes = {
+  handlePause: PropTypes.func,
+  handlePlay: PropTypes.func,
+  handleSeek: PropTypes.func,
+  isHost: PropTypes.bool,
+  setPlayer: PropTypes.func,
+  url: PropTypes.string,
 }
 
 export default Player
