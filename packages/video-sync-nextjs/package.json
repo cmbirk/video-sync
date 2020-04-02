@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "9.3.2",
+    "next-optimized-images": "^2.5.5",
     "postcss-import": "^12.0.1",
     "postcss-preset-env": "^6.7.0",
     "react": "16.13.1",
