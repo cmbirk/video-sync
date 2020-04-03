@@ -62,6 +62,10 @@ io.on('connection', (socket) => {
     room = io.sockets.adapter.rooms[roomId]
 
     console.log(`${room.length} clients in room ${roomId}`)
+    io.to(roomId).emit('new room user', {
+      id: socket.id,
+      username: 'Unknown',
+    })
   })
 
   socket.on('disconnect', () => {
@@ -74,6 +78,16 @@ io.on('connection', (socket) => {
     console.log(userRooms[socket.id])
 
     delete userRooms[socket.id]
+  })
+
+  socket.on('username set', (data) => {
+    console.log(data)
+
+    const { roomId, username } = data
+
+    socket.username = username
+
+    io.to(roomId).emit('set username', { id: socket.id, username })
   })
 
   socket.on('video url set', (data) => {
