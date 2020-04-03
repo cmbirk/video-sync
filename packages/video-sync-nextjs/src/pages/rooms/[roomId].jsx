@@ -6,12 +6,16 @@ import PropTypes from 'prop-types'
 import SidebarLayout from '@layout/SidebarLayout'
 import { Player, VideoForm } from '@components'
 
+// import firebase from '@services/firebase'
+
 class Room extends Component {
   state = {
     hostId: null,
     player: null,
     playing: false,
+    room: {},
     username: '',
+    users: {},
     videoUrl: '',
   }
 
@@ -24,12 +28,35 @@ class Room extends Component {
       const { router } = this.props
       const { roomId } = router.query
 
+      // const db = firebase.firestore()
+
+      // this.roomRef = db.collection('Rooms').doc(roomId)
+
+      // this.roomRef
+        // .onSnapshot((doc) => {
+          // console.log('doc')
+          // console.log(doc)
+        // })
+
       this.setState({ roomId })
 
       this.socket = io(process.env.apiurl)
 
       this.socket.emit('joined room', {
         roomId,
+      })
+
+      this.socket.on('new room user', ({ id, username }) => {
+        // this.roomRef.update({
+        //   users: firebase.firestore.FieldValue.arrayUnion({ id, username }),
+        // })
+        const { users } = this.state
+
+        users[id] = username
+
+        this.setState({
+          users,
+        })
       })
 
       this.socket.on('set host', ({ hostId }) => {
@@ -60,6 +87,16 @@ class Room extends Component {
 
         this.state.player.seekTo(currentTime)
         this.state.player.getInternalPlayer().play()
+      })
+
+      this.socket.on('set username', ({ id, username }) => {
+        console.log('Username set')
+        console.log(id, username)
+
+        const { users } = this.state
+        users[id] = username
+
+        this.setState({ users })
       })
     }
   }
@@ -126,10 +163,19 @@ class Room extends Component {
     return videoUrl
   }
 
-  handleUsernameSubmit = (username) => {
+  handleUpdateUsername = async (username) => {
+    const users = await this.roomRef.collection('users').where('id', '==', this.socket.id).get()
+    console.log(this.socket.id)
+    console.log(users)
+
+    users[0].update({ username })
+
+    const { roomId } = this.state
     const { id } = this.socket
 
-    this.socket.emit('username set', { id, username })
+    console.log(username, id)
+
+    this.socket.emit('username set', { roomId, id, username })
 
     this.setState({ username })
   }
@@ -155,17 +201,21 @@ class Room extends Component {
   render() {
     const { router } = this.props
     const {
-      playing, videoUrl,
+      playing,
+      videoUrl,
+      users,
     } = this.state
     const { roomId } = router.query
 
     return (
       <SidebarLayout
-        canReset={videoUrl && this.isHost()}
+        canReset={(videoUrl && this.isHost()) || false}
+        handleUpdateUsername={this.handleUpdateUsername}
         isConnected={this.isConnected()}
         isHost={this.isHost()}
         resetVideoUrl={this.resetVideoUrl}
         roomId={roomId}
+        users={users}
       >
         { videoUrl ? (
             <Player
@@ -188,11 +238,7 @@ class Room extends Component {
 }
 
 Room.propTypes = {
-  router: {
-    query: {
-      roomId: PropTypes.string,
-    },
-  },
+  router: PropTypes.object,
 }
 
 export default withRouter(Room)

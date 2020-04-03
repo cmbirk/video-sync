@@ -22,11 +22,13 @@ class SidebarLayout extends Component {
     const {
       canReset,
       children,
+      handleUpdateUsername,
       isConnected,
       isHost,
       resetVideoUrl,
       roomId,
       title,
+      users,
     } = this.props
 
     const { sidebarOpen } = this.state
@@ -40,6 +42,8 @@ class SidebarLayout extends Component {
           roomId={roomId}
           sidebarOpen={sidebarOpen}
           toggleSidebar={this.toggleSidebar}
+          handleUpdateUsername={handleUpdateUsername}
+          users={users}
         />
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
           <SidebarHeader

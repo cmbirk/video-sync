@@ -10,6 +10,7 @@ module.exports = {
           '@config': './next.config.js',
           '@icons': './src/icons',
           '@layout': './src/layout',
+          '@services': './src/services',
         },
       },
     ],

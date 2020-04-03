@@ -4,11 +4,13 @@ import Head from 'next/head'
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
+// import firebase from '@services/firebase'
+
 import HeroLayout from '@layout/HeroLayout'
 import Button from '@components/Button'
 
 const Home = () => {
-  const setRoomId = async () => {
+  const setRoomId = () => {
 
   }
 
@@ -21,6 +23,20 @@ const Home = () => {
 
     const { newRoom } = data
 
+    // let roomRef
+
+    // if (typeof window !== 'undefined') {
+      // const db = firebase.firestore()
+
+      // roomRef = await db.collection('Rooms').add({
+      //   roomId: newRoom,
+      //   name: 'unknown',
+      // })
+    // }
+
+
+
+    // Router.push(`/rooms/${roomRef.id}`)
     Router.push(`/rooms/${newRoom}`)
   }
 
