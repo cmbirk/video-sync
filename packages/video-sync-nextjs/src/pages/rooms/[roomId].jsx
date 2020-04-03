@@ -164,11 +164,11 @@ class Room extends Component {
   }
 
   handleUpdateUsername = async (username) => {
-    const users = await this.roomRef.collection('users').where('id', '==', this.socket.id).get()
-    console.log(this.socket.id)
-    console.log(users)
+    // const users = await this.roomRef.collection('users').where('id', '==', this.socket.id).get()
+    // console.log(this.socket.id)
+    // console.log(users)
 
-    users[0].update({ username })
+    // users[0].update({ username })
 
     const { roomId } = this.state
     const { id } = this.socket
