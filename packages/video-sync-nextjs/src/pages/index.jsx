@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Head from 'next/head'
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
-// import firebase from '@services/firebase'
+import firebase from '@services/firebase'
 
 import HeroLayout from '@layout/HeroLayout'
 import Button from '@components/Button'
 
 const Home = () => {
-  const setRoomId = () => {
+  const [roomId, updateRoomId] = useState('')
 
+  const setRoomId = () => {
+    if (typeof window !== 'undefined') {
+      Router.push(`/rooms/${roomId}`)
+    }
   }
 
   const getRoomId = async () => {
@@ -23,21 +27,19 @@ const Home = () => {
 
     const { newRoom } = data
 
-    // let roomRef
+    let roomRef
 
-    // if (typeof window !== 'undefined') {
-      // const db = firebase.firestore()
+    if (typeof window !== 'undefined') {
+      const db = firebase.firestore()
 
-      // roomRef = await db.collection('Rooms').add({
-      //   roomId: newRoom,
-      //   name: 'unknown',
-      // })
-    // }
+      roomRef = await db.collection('Rooms').add({
+        roomId: newRoom,
+        name: 'unknown',
+      })
+    }
 
-
-
-    // Router.push(`/rooms/${roomRef.id}`)
-    Router.push(`/rooms/${newRoom}`)
+    Router.push(`/rooms/${roomRef.id}`)
+    // Router.push(`/rooms/${newRoom}`)
   }
 
   return (
@@ -53,9 +55,17 @@ const Home = () => {
           </h2>
           <form
             className="mt-8 sm:flex"
-            onSubmit={setRoomId}
+            onSubmit={() => setRoomId()}
           >
-            <input aria-label="Room Id" type="text" required className="appearance-none w-full px-5 py-3 border border-gray-300 text-base leading-6 rounded-md text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:shadow-outline focus:border-blue-300 transition duration-150 ease-in-out sm:max-w-xs" placeholder="Enter your room ID" />
+            <input
+              onChange={(e) => updateRoomId(e.target.value)}
+              value={roomId}
+              aria-label="Room Id"
+              type="text"
+              required
+              className="appearance-none w-full px-5 py-3 border border-gray-300 text-base leading-6 rounded-md text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:shadow-outline focus:border-blue-300 transition duration-150 ease-in-out sm:max-w-xs"
+              placeholder="Enter your room ID"
+            />
             <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
               <button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
                 Go to room &gt;&gt;

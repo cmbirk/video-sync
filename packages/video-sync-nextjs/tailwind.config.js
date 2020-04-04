@@ -13,4 +13,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/ui'),
   ],
+  variants: {
+    visibility: ['group-hover'],
+  },
 }

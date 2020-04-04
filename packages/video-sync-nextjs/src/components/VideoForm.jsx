@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const VideoForm = (props) => {
-  const { onSubmit } = props
+  const { className, onSubmit } = props
 
   const [inputs, setInputs] = useState({
     videoUrl: '',
@@ -24,7 +24,7 @@ const VideoForm = (props) => {
   }
 
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className={`${className} flex items-center justify-center h-full`}>
       <div className="w-1/5"></div>
       <div className="w-3/5">
         <form onSubmit={handleSubmit}>
@@ -52,6 +52,7 @@ const VideoForm = (props) => {
 }
 
 VideoForm.propTypes = {
+  className: PropTypes.string,
   onSubmit: PropTypes.func,
 }
 

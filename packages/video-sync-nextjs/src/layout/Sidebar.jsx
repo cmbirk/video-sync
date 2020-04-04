@@ -3,16 +3,18 @@ import Link from 'next/link'
 
 import PropTypes from 'prop-types'
 
-import { Username } from '@components'
+import { UserList, Username } from '@components'
 
 const Sidebar = ({
   canReset,
+  handleSetHost,
   handleUpdateUsername,
   isHost,
   resetVideoUrl,
   roomId,
   sidebarOpen,
   toggleSidebar,
+  user,
   users,
 }) => (
     <>
@@ -65,21 +67,17 @@ const Sidebar = ({
                       : null
                    }
                 </span>
-                <div className="mt-1 group flex flex-col px-2 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-100 transition ease-in-out duration-150">
-                  <div>Users ({ Object.keys(users).length }):</div>
-                  <div>
-                    <ul>
-                      { Object.keys(users).map((id) => (
-                        <li key={id}>{users[id]}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                <UserList
+                  isHost={isHost}
+                  users={users}
+                  handleSetHost={handleSetHost}
+                />
               </nav>
             </div>
             <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
               <Username
                 handleUpdateUsername={handleUpdateUsername}
+                name={user ? user.username : null}
               />
             </div>
           </div>
@@ -98,6 +96,7 @@ Sidebar.propTypes = {
   roomId: PropTypes.string,
   sidebarOpen: PropTypes.bool,
   toggleSidebar: PropTypes.func,
+  users: PropTypes.array,
 }
 
 export default Sidebar
