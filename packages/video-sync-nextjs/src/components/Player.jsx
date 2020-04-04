@@ -4,31 +4,15 @@ import ReactPlayer from 'react-player'
 import PropTypes from 'prop-types'
 
 class Player extends Component {
+  componentDidUpdate() {
+    const { currentTime } = this.props
+
+    this.player.seekTo(currentTime)
+  }
+
   handleError = (err) => {
     console.error('Player Error:')
     console.error(err)
-  }
-
-  handleSeek = (seconds) => {
-    const { handleSeek } = this.props
-
-    console.log(`Seeked to ${seconds} seconds.`)
-
-    handleSeek({ seconds })
-  }
-
-  handlePause = () => {
-    const { handlePause } = this.props
-    console.log('Paused.')
-
-    handlePause({ currentTime: this.player.getCurrentTime() })
-  }
-
-  handlePlay = () => {
-    const { handlePlay } = this.props
-    console.log('Played.')
-
-    handlePlay({ currentTime: this.player.getCurrentTime() })
   }
 
   handleStart = () => {
@@ -36,12 +20,39 @@ class Player extends Component {
   }
 
   handleReady = () => {
+    const { currentTime, isHost } = this.props
+
+    if (isHost && this.seeking) {
+      this.seeking = false
+      return false
+    }
     console.log('Ready.')
+
+    const playerTime = this.player.getCurrentTime()
+
+    if (currentTime !== playerTime) {
+      this.player.seekTo(currentTime)
+    }
   }
 
   handleProgress = (data) => {
+    const { isHost } = this.props
+    if (!isHost) return false
+
+    const { handleProgress } = this.props
     console.log('Progess.')
     console.log(data)
+
+    handleProgress(data)
+  }
+
+  handleSeek = (seconds) => {
+    const { handleSeek, isHost } = this.props
+    if (!isHost) return false
+
+    this.seeking = true
+
+    handleSeek(seconds)
   }
 
   ref = (player) => {
@@ -54,22 +65,30 @@ class Player extends Component {
 
   render() {
     const {
-      isHost = false, url,
+      className,
+      currentTime,
+      handlePause,
+      handlePlay,
+      isHost = false,
+      url,
+      playing = false,
     } = this.props
 
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className={`${className} flex items-center justify-center h-full`}>
         <ReactPlayer
+          playing={playing}
           ref={this.ref}
           url={url}
           controls={isHost}
           onError={this.handleError}
           onSeek={this.handleSeek}
-          onPause={this.handlePause}
-          onPlay={this.handlePlay}
+          onPause={handlePause}
+          onPlay={handlePlay}
           onStart={this.handleStart}
           onReady={this.handleReady}
-          onProgress={this.handleProgress}
+          width='100%'
+          height='100%'
         />
       </div>
     )

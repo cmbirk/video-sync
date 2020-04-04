@@ -12,7 +12,6 @@ class Room extends Component {
   state = {
     hostId: null,
     player: null,
-    playing: false,
     room: {},
     userId: '',
     users: [],
@@ -140,45 +139,59 @@ class Room extends Component {
     return found[0]
   }
 
-  handleSeek = ({ seconds }) => {
+  handleSeek = (seconds) => {
     if (!this.isHost()) return false
 
-    const { roomId } = this.state
-
-    this.socket.emit('seek set', {
-      seconds,
-      roomId,
+    this.roomRef.update({
+      currentTime: seconds,
     })
 
     return seconds
   }
 
-  handlePause = ({ currentTime }) => {
+  handlePause = () => {
     if (!this.isHost()) return false
 
-    const { roomId } = this.state
+    const { player } = this.state
 
-    this.socket.emit('pause set', {
+    const currentTime = player.getCurrentTime()
+
+    this.roomRef.update({
       currentTime,
-      roomId,
+      playing: false,
     })
 
     return currentTime
   }
 
-  handlePlay = ({ currentTime }) => {
-    this.state.player.requestFullScreen()
-
+  handlePlay = () => {
     if (!this.isHost()) return false
 
-    const { roomId } = this.state
+    const { player } = this.state
 
-    this.socket.emit('play set', {
+    const currentTime = player.getCurrentTime()
+
+    this.roomRef.update({
       currentTime,
-      roomId,
+      playing: true,
     })
 
     return currentTime
+  }
+
+  handleProgress = ({
+    playedSeconds,
+    // played,
+    // loadedSeconds,
+    // loaded,
+  }) => {
+    if (!this.isHost()) return false
+
+    this.roomRef.update({
+      asyncTime: playedSeconds,
+    })
+
+    return playedSeconds
   }
 
   handleSubmit = (videoUrl) => {
@@ -217,16 +230,12 @@ class Room extends Component {
   }
 
   render() {
-    const { router } = this.props
     const {
       room,
       users = [],
-      playing,
     } = this.state
 
-    const { videoUrl } = room
-
-    const { roomId } = router.query
+    const { currentTime, playing, videoUrl } = room
 
     return (
       <SidebarLayout
@@ -240,15 +249,16 @@ class Room extends Component {
         user={this.user()}
         users={users}
       >
-
         <Player
           className={`${videoUrl ? '' : 'hidden'}`}
+          currentTime={currentTime}
           isHost={this.isHost()}
           url={videoUrl}
           playing={playing}
           setPlayer={this.setPlayer}
           handlePause={this.handlePause}
           handlePlay={this.handlePlay}
+          handleProgress={this.handleProgress}
           handleSeek={this.handleSeek}
         />
 
