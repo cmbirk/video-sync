@@ -1,7 +1,15 @@
 {
   "build": {
     "env": {
-      "apiurl": "@apiurl"
+      "apiurl": "@apiurl",
+      "apikey": "@apikey",
+      "authdomain": "@authdomain",
+      "databaseurl": "@databaseurl",
+      "projectid": "@projectid",
+      "storagebucket": "@storagebucket",
+      "messagingsenderid": "@messagingsenderid",
+      "appid": "@appid",
+      "measurementid": "@measurementid"
     }
   }
 }
