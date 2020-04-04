@@ -13,7 +13,8 @@ const Home = () => {
   const [roomId, updateRoomId] = useState('')
 
   const setRoomId = () => {
-    Router.push(`/rooms/${roomId}`)
+    // const router = useRouter()
+    Router.replace(`/rooms/${roomId}`)
   }
 
   const getRoomId = async () => {
