@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import Head from 'next/head'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
 import firebase from '@services/firebase'
@@ -13,9 +13,7 @@ const Home = () => {
   const [roomId, updateRoomId] = useState('')
 
   const setRoomId = () => {
-    if (typeof window !== 'undefined') {
-      Router.push(`/rooms/${roomId}`)
-    }
+    Router.push(`/rooms/${roomId}`)
   }
 
   const getRoomId = async () => {
