@@ -23,6 +23,7 @@ class SidebarLayout extends Component {
       canReset,
       children,
       handleKick,
+      handleRoomNameChange,
       handleSetHost,
       handleUpdateUsername,
       isHost,
@@ -50,6 +51,7 @@ class SidebarLayout extends Component {
         />
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
           <SidebarHeader
+            handleRoomNameChange={handleRoomNameChange}
             roomName={room.name}
             toggleSidebar={this.toggleSidebar}
           />

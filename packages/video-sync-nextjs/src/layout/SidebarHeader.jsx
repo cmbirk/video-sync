@@ -4,12 +4,13 @@ import PropTypes from 'prop-types'
 
 import BrokenLink from '@icons/brokenLink'
 
+import { RoomName } from '@components'
+
 const SidebarHeader = ({
-  roomName: givenRoomName,
+  handleRoomNameChange,
+  roomName,
   toggleSidebar,
 }) => {
-  const [roomName, setRoomName] = useState(givenRoomName)
-
   return (
     <div className="border-b flex justify-between">
 
@@ -19,9 +20,12 @@ const SidebarHeader = ({
         </svg>
       </button>
 
-      <h1 className="text-lg italic font-bold self-center">
-        {givenRoomName}
-      </h1>
+      <RoomName
+        handleRoomNameChange={handleRoomNameChange}
+        roomName={roomName}
+      />
+
+      <div />
     </div>
   )
 }

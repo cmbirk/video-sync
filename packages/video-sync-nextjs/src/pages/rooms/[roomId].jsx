@@ -206,6 +206,10 @@ class Room extends Component {
     })
   }
 
+  handleRoomNameChange = (roomName) => {
+    this.roomRef.update({ name: roomName })
+  }
+
   handleUpdateUsername = async (username) => {
     const { userId } = this.state
 
@@ -240,6 +244,7 @@ class Room extends Component {
       <SidebarLayout
         canReset={(videoUrl && this.isHost()) || false}
         handleKick={this.handleKick}
+        handleRoomNameChange={this.handleRoomNameChange}
         handleSetHost={this.handleSetHost}
         handleUpdateUsername={this.handleUpdateUsername}
         isHost={this.isHost()}
