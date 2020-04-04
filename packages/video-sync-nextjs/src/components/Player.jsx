@@ -80,7 +80,7 @@ class Player extends Component {
           playing={playing}
           ref={this.ref}
           url={url}
-          controls={isHost}
+          controls
           onError={this.handleError}
           onSeek={this.handleSeek}
           onPause={handlePause}

@@ -35,6 +35,7 @@ const Home = () => {
       roomRef = await db.collection('Rooms').add({
         roomId: newRoom,
         name: 'unknown',
+        currentTime: 0,
       })
     }
 
