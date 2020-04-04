@@ -112,7 +112,11 @@ class Room extends Component {
   isHost = () => {
     const { userId, room: { hostId } } = this.state
 
-    return (userId && userId === hostId)
+    if (!userId) {
+      return false
+    }
+
+    return (userId === hostId)
   }
 
   user = () => {
