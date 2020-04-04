@@ -46,6 +46,7 @@ class Room extends Component {
     let user
 
     if (localStorage.getItem('roomId') !== roomId) {
+      console.log('Local storage not matching, resetting')
       localStorage.setItem('roomId', roomId)
       localStorage.removeItem('userId')
     }
@@ -64,6 +65,8 @@ class Room extends Component {
         })
 
         userId = user.id
+
+        localStorage.setItem('userId', userId)
       }
     } else {
       user = await this.roomRef.collection('users').add({
