@@ -7,6 +7,7 @@ import { UserList, Username } from '@components'
 
 const Sidebar = ({
   canReset,
+  handleKick,
   handleSetHost,
   handleUpdateUsername,
   isHost,
@@ -70,6 +71,7 @@ const Sidebar = ({
                 <UserList
                   isHost={isHost}
                   users={users}
+                  handleKick={handleKick}
                   handleSetHost={handleSetHost}
                 />
               </nav>

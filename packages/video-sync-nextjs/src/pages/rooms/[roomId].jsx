@@ -43,27 +43,12 @@ class Room extends Component {
         this.setState({ room: roomData })
       })
 
-    this.roomRef.collection('users')
-      .onSnapshot((usersQuery) => {
-        const userSnapshot = usersQuery.docs
-        const users = userSnapshot.map((userRef) => {
-          const refData = userRef.data()
-          return {
-            id: userRef.id,
-            ...refData,
-          }
-        })
-
-        if (users.length === 1) {
-          console.log(users)
-
-          this.roomRef.update({ hostId: users[0].id })
-        }
-
-        this.setState({ users })
-      })
-
     let user
+
+    if (localStorage.getItem('roomId') !== roomId) {
+      localStorage.setItem('roomId', roomId)
+      localStorage.removeItem('userId')
+    }
 
     let userId = localStorage.getItem('userId')
 
@@ -78,10 +63,40 @@ class Room extends Component {
       })
 
       localStorage.setItem('userId', user.id)
+      localStorage.setItem('roomId', roomId)
       userId = user.id
     }
 
     this.setState({ userId })
+
+    this.roomRef.collection('users')
+      .onSnapshot((usersQuery) => {
+        const userSnapshot = usersQuery.docs
+        const users = userSnapshot.map((userRef) => {
+          const refData = userRef.data()
+          return {
+            id: userRef.id,
+            ...refData,
+          }
+        })
+
+        const userIds = users.map((u) => u.id)
+
+        // This user is no longer in the room
+        if (!userIds.includes(userId)) {
+          localStorage.removeItem('userId')
+          console.error('You have been kicked!')
+          Router.push('/')
+        }
+
+        const { room: roomData } = this.state
+
+        if (!roomData.hostId) {
+          this.roomRef.update({ hostId: users[0].id })
+        }
+
+        this.setState({ users })
+      })
   }
 
   setupBeforeUnloadListener = () => {
@@ -170,6 +185,17 @@ class Room extends Component {
     return videoUrl
   }
 
+  handleKick = (id) => {
+    const { room: { hostId } } = this.state
+
+    if (id === hostId) {
+      console.error('You cannot kick out the host!')
+      return false
+    }
+
+    this.roomRef.collection('users').doc(id).delete()
+  }
+
   handleSetHost = (hostId) => {
     this.roomRef.update({
       hostId,
@@ -209,6 +235,7 @@ class Room extends Component {
     return (
       <SidebarLayout
         canReset={(videoUrl && this.isHost()) || false}
+        handleKick={this.handleKick}
         handleSetHost={this.handleSetHost}
         handleUpdateUsername={this.handleUpdateUsername}
         isHost={this.isHost()}

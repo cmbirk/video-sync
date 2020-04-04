@@ -22,6 +22,7 @@ class SidebarLayout extends Component {
     const {
       canReset,
       children,
+      handleKick,
       handleSetHost,
       handleUpdateUsername,
       isHost,
@@ -40,6 +41,7 @@ class SidebarLayout extends Component {
           isHost={isHost}
           resetVideoUrl={resetVideoUrl}
           sidebarOpen={sidebarOpen}
+          handleKick={handleKick}
           handleSetHost={handleSetHost}
           toggleSidebar={this.toggleSidebar}
           handleUpdateUsername={handleUpdateUsername}

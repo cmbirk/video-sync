@@ -28,15 +28,17 @@ const Username = ({
         { editing
           ? (
             <div className="ml-3">
-              <input autoFocus type="text" onChange={(event) => {
-                updateUsername(event.target.value)
-              }} value={username}/>
-              <p
-                onClick={() => { saveUsername() }}
-                className="cursor-pointer text-sm leading-5 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150"
-              >
-                Save Username
-              </p>
+              <form onSubmit={() => saveUsername() }>
+                <input autoFocus type="text" onChange={(event) => {
+                  updateUsername(event.target.value)
+                }} value={username}/>
+                <button
+                  type="submit"
+                  className="cursor-pointer text-sm leading-5 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150"
+                >
+                  Save Username
+                </button>
+              </form>
             </div>
           )
           : (
