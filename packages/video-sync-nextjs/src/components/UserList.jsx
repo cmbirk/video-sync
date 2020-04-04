@@ -1,5 +1,7 @@
 import React from 'react'
 
+import PropTypes from 'prop-types'
+
 const UserList = ({
   isHost,
   handleKick,
@@ -10,14 +12,14 @@ const UserList = ({
     <div>Users ({ users.length }):</div>
     <div>
       <ul>
-        { users.map(({ username, id }) => (
+        { users.map(({ online, username, id }) => (
           <li
             className="group"
             key={id}
           >
-            {username}
-            { isHost ?
-              (
+            <span>{ online ? '⚡️' : '🚫'}</span>{username}
+            { isHost
+              ? (
                 <>
                 <span
                   className="invisible group-hover:visible text-gray-400 text-xs ml-4 cursor-pointer"
@@ -45,5 +47,12 @@ const UserList = ({
     </div>
   </div>
 )
+
+UserList.propTypes = {
+  handleKick: PropTypes.func,
+  handleSetHost: PropTypes.func,
+  isHost: PropTypes.bool,
+  users: PropTypes.array,
+}
 
 export default UserList

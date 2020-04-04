@@ -97,15 +97,19 @@ class Room extends Component {
 
         this.setState({ users })
       })
+
+    this.setupBeforeUnloadListener()
   }
 
   setupBeforeUnloadListener = () => {
     const { userId } = this.state
 
-    window.addEventListener('beforeunload', (/* ev */) => {
-      this.roomRef.collection('users').doc(userId).update({
+    window.addEventListener('beforeunload', async (e) => {
+      e.preventDefault()
+      await this.roomRef.collection('users').doc(userId).update({
         online: false,
       })
+      e.invokeDefault()
     })
   }
 
