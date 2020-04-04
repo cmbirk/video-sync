@@ -5,7 +5,7 @@ module.exports = {
     apiurl: process.env.apiurl,
     apikey: process.env.apikey,
     authdomain: process.env.authdomain,
-    databaserl: process.env.databaseurl,
+    databaseurl: process.env.databaseurl,
     projectid: process.env.projectid,
     storagebucket: process.env.storagebucket,
     messagingsenderid: process.env.messagingsenderid,

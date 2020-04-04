@@ -24,7 +24,6 @@ class SidebarLayout extends Component {
       children,
       handleSetHost,
       handleUpdateUsername,
-      isConnected,
       isHost,
       resetVideoUrl,
       room,
@@ -49,7 +48,6 @@ class SidebarLayout extends Component {
         />
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
           <SidebarHeader
-            isConnected={isConnected}
             roomName={room.name}
             toggleSidebar={this.toggleSidebar}
           />

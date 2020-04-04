@@ -211,7 +211,6 @@ class Room extends Component {
         canReset={(videoUrl && this.isHost()) || false}
         handleSetHost={this.handleSetHost}
         handleUpdateUsername={this.handleUpdateUsername}
-        isConnected={this.isConnected()}
         isHost={this.isHost()}
         resetVideoUrl={this.resetVideoUrl}
         room={room}
