@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Router, { withRouter } from 'next/router'
-import io from 'socket.io-client'
 import PropTypes from 'prop-types'
 
 import SidebarLayout from '@layout/SidebarLayout'
@@ -64,8 +63,6 @@ class Room extends Component {
         this.setState({ users })
       })
 
-    this.socket = io(process.env.apiurl)
-
     let user
 
     let userId = localStorage.getItem('userId')
@@ -85,32 +82,6 @@ class Room extends Component {
     }
 
     this.setState({ userId })
-
-    if (typeof window !== 'undefined') {
-      this.socket.emit('joined room', {
-        roomId,
-      })
-
-      this.socket.on('set seek', (data) => {
-        const { seconds } = data
-
-        this.state.player.seekTo(seconds)
-      })
-
-      this.socket.on('set pause', (data) => {
-        const { currentTime } = data
-
-        this.state.player.seekTo(currentTime)
-        this.state.player.getInternalPlayer().pause()
-      })
-
-      this.socket.on('set play', (data) => {
-        const { currentTime } = data
-
-        this.state.player.seekTo(currentTime)
-        this.state.player.getInternalPlayer().play()
-      })
-    }
   }
 
   setupBeforeUnloadListener = () => {
@@ -122,8 +93,6 @@ class Room extends Component {
       })
     })
   }
-
-  isConnected = () => this.socket && this.socket.connected
 
   isHost = () => {
     const { userId, room: { hostId } } = this.state
