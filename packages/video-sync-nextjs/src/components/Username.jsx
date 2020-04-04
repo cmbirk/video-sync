@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 const Username = ({
   avatarUrl: givenAvatarUrl = 'https://api.adorable.io/avatars/400/4d14880bca122e668444062007500f9c.png',
-  username: givenUsername = 'Unknown',
+  name,
   handleUpdateUsername,
 }) => {
   const [editing, setEditing] = useState(false)
-  const [username, updateUsername] = useState(givenUsername)
+  const [username, updateUsername] = useState(name)
   const [avatarUrl, updateAvatarUrl] = useState(givenAvatarUrl)
+
+  useEffect(() => {
+    updateUsername(name)
+  }, [name])
 
   const saveUsername = () => {
     setEditing(false)

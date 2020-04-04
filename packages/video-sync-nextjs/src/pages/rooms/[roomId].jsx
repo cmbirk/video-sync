@@ -1,183 +1,185 @@
 import React, { Component } from 'react'
-import { withRouter } from 'next/router'
-import io from 'socket.io-client'
+import Router, { withRouter } from 'next/router'
 import PropTypes from 'prop-types'
 
 import SidebarLayout from '@layout/SidebarLayout'
 import { Player, VideoForm } from '@components'
 
-// import firebase from '@services/firebase'
+import firebase from '@services/firebase'
 
 class Room extends Component {
   state = {
     hostId: null,
     player: null,
-    playing: false,
     room: {},
-    username: '',
-    users: {},
-    videoUrl: '',
+    userId: '',
+    users: [],
   }
 
   static async getInitialProps(/* ctx */) {
     return {}
   }
 
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      const { router } = this.props
-      const { roomId } = router.query
+  async componentDidMount() {
+    const { router } = this.props
+    const { roomId } = router.query
 
-      // const db = firebase.firestore()
+    const db = firebase.firestore()
 
-      // this.roomRef = db.collection('Rooms').doc(roomId)
+    this.roomRef = db.collection('Rooms').doc(roomId)
 
-      // this.roomRef
-        // .onSnapshot((doc) => {
-          // console.log('doc')
-          // console.log(doc)
-        // })
+    const room = await this.roomRef.get()
 
-      this.setState({ roomId })
+    if (!room.exists) {
+      console.error('Room does not exist')
+      console.error(room)
+      Router.push('/')
+    }
 
-      this.socket = io(process.env.apiurl)
+    this.roomRef
+      .onSnapshot((doc) => {
+        const roomData = doc.data()
 
-      this.socket.emit('joined room', {
-        roomId,
+        this.setState({ room: roomData })
       })
 
-      this.socket.on('new room user', ({ id, username }) => {
-        // this.roomRef.update({
-        //   users: firebase.firestore.FieldValue.arrayUnion({ id, username }),
-        // })
-        const { users } = this.state
-
-        users[id] = username
-
-        this.setState({
-          users,
+    this.roomRef.collection('users')
+      .onSnapshot((usersQuery) => {
+        const userSnapshot = usersQuery.docs
+        const users = userSnapshot.map((userRef) => {
+          const refData = userRef.data()
+          return {
+            id: userRef.id,
+            ...refData,
+          }
         })
-      })
 
-      this.socket.on('set host', ({ hostId }) => {
-        this.setState({ hostId })
-      })
+        if (users.length === 1) {
+          console.log(users)
 
-      this.socket.on('set video url', (data) => {
-        const { videoUrl } = data
-
-        this.setState({ videoUrl })
-      })
-
-      this.socket.on('set seek', (data) => {
-        const { seconds } = data
-
-        this.state.player.seekTo(seconds)
-      })
-
-      this.socket.on('set pause', (data) => {
-        const { currentTime } = data
-
-        this.state.player.seekTo(currentTime)
-        this.state.player.getInternalPlayer().pause()
-      })
-
-      this.socket.on('set play', (data) => {
-        const { currentTime } = data
-
-        this.state.player.seekTo(currentTime)
-        this.state.player.getInternalPlayer().play()
-      })
-
-      this.socket.on('set username', ({ id, username }) => {
-        console.log('Username set')
-        console.log(id, username)
-
-        const { users } = this.state
-        users[id] = username
+          this.roomRef.update({ hostId: users[0].id })
+        }
 
         this.setState({ users })
       })
+
+    let user
+
+    let userId = localStorage.getItem('userId')
+
+    if (userId) {
+      user = await this.roomRef.collection('users').doc(userId).update({
+        online: true,
+      })
+    } else {
+      user = await this.roomRef.collection('users').add({
+        username: 'unknown',
+        online: true,
+      })
+
+      localStorage.setItem('userId', user.id)
+      userId = user.id
     }
+
+    this.setState({ userId })
   }
 
-  isConnected = () => this.socket && this.socket.connected
+  setupBeforeUnloadListener = () => {
+    const { userId } = this.state
+
+    window.addEventListener('beforeunload', (/* ev */) => {
+      this.roomRef.collection('users').doc(userId).update({
+        online: false,
+      })
+    })
+  }
 
   isHost = () => {
-    const { hostId } = this.state
+    const { userId, room: { hostId } } = this.state
 
-    if (!this.socket) return false
-    if (!hostId) return false
-
-    return this.socket.id === hostId.replace('$', '')
+    return (userId && userId === hostId)
   }
 
-  handleSeek = ({ seconds }) => {
+  user = () => {
+    const { users, userId } = this.state
+
+    const found = users.filter((u) => u.id === userId)
+
+    return found[0]
+  }
+
+  handleSeek = (seconds) => {
     if (!this.isHost()) return false
 
-    const { roomId } = this.state
-
-    this.socket.emit('seek set', {
-      seconds,
-      roomId,
+    this.roomRef.update({
+      currentTime: seconds,
     })
 
     return seconds
   }
 
-  handlePause = ({ currentTime }) => {
+  handlePause = () => {
     if (!this.isHost()) return false
 
-    const { roomId } = this.state
+    const { player } = this.state
 
-    this.socket.emit('pause set', {
+    const currentTime = player.getCurrentTime()
+
+    this.roomRef.update({
       currentTime,
-      roomId,
+      playing: false,
     })
 
     return currentTime
   }
 
-  handlePlay = ({ currentTime }) => {
+  handlePlay = () => {
     if (!this.isHost()) return false
 
-    const { roomId } = this.state
+    const { player } = this.state
 
-    this.socket.emit('play set', {
+    const currentTime = player.getCurrentTime()
+
+    this.roomRef.update({
       currentTime,
-      roomId,
+      playing: true,
     })
 
     return currentTime
+  }
+
+  handleProgress = ({
+    playedSeconds,
+    // played,
+    // loadedSeconds,
+    // loaded,
+  }) => {
+    if (!this.isHost()) return false
+
+    this.roomRef.update({
+      asyncTime: playedSeconds,
+    })
+
+    return playedSeconds
   }
 
   handleSubmit = (videoUrl) => {
     if (!this.isHost()) return false
-
-    const { roomId } = this.state
-
-    this.setState({ videoUrl })
-
-    this.socket.emit('video url set', { videoUrl, roomId })
+    this.roomRef.update({ videoUrl })
 
     return videoUrl
   }
 
+  handleSetHost = (hostId) => {
+    this.roomRef.update({
+      hostId,
+    })
+  }
+
   handleUpdateUsername = async (username) => {
-    // const users = await this.roomRef.collection('users').where('id', '==', this.socket.id).get()
-    // console.log(this.socket.id)
-    // console.log(users)
+    const { userId } = this.state
 
-    // users[0].update({ username })
-
-    const { roomId } = this.state
-    const { id } = this.socket
-
-    console.log(username, id)
-
-    this.socket.emit('username set', { roomId, id, username })
-
-    this.setState({ username })
+    this.roomRef.collection('users').doc(userId).update({ username })
   }
 
   resetVideoUrl = () => {
@@ -187,9 +189,7 @@ class Room extends Component {
       return false
     }
 
-    const { roomId } = this.state
-
-    this.socket.emit('video url set', { videoUrl: '', roomId })
+    this.roomRef.update({ videoUrl: null })
 
     return null
   }
@@ -199,39 +199,41 @@ class Room extends Component {
   }
 
   render() {
-    const { router } = this.props
     const {
-      playing,
-      videoUrl,
-      users,
+      room,
+      users = [],
     } = this.state
-    const { roomId } = router.query
+
+    const { currentTime, playing, videoUrl } = room
 
     return (
       <SidebarLayout
         canReset={(videoUrl && this.isHost()) || false}
+        handleSetHost={this.handleSetHost}
         handleUpdateUsername={this.handleUpdateUsername}
-        isConnected={this.isConnected()}
         isHost={this.isHost()}
         resetVideoUrl={this.resetVideoUrl}
-        roomId={roomId}
+        room={room}
+        user={this.user()}
         users={users}
       >
-        { videoUrl ? (
-            <Player
-              isHost={this.isHost()}
-              url={videoUrl}
-              playing={playing}
-              setPlayer={this.setPlayer}
-              handlePause={this.handlePause}
-              handlePlay={this.handlePlay}
-              handleSeek={this.handleSeek}
-            />
-        ) : (
-            <VideoForm onSubmit={this.handleSubmit}/>
-        )
+        <Player
+          className={`${videoUrl ? '' : 'hidden'}`}
+          currentTime={currentTime}
+          isHost={this.isHost()}
+          url={videoUrl}
+          playing={playing}
+          setPlayer={this.setPlayer}
+          handlePause={this.handlePause}
+          handlePlay={this.handlePlay}
+          handleProgress={this.handleProgress}
+          handleSeek={this.handleSeek}
+        />
 
-        }
+        <VideoForm
+          className={`${videoUrl ? 'hidden' : ''}`}
+          onSubmit={this.handleSubmit}
+        />
       </SidebarLayout>
     )
   }

@@ -22,12 +22,12 @@ class SidebarLayout extends Component {
     const {
       canReset,
       children,
+      handleSetHost,
       handleUpdateUsername,
-      isConnected,
       isHost,
       resetVideoUrl,
-      roomId,
-      title,
+      room,
+      user,
       users,
     } = this.props
 
@@ -39,17 +39,16 @@ class SidebarLayout extends Component {
           canReset={canReset}
           isHost={isHost}
           resetVideoUrl={resetVideoUrl}
-          roomId={roomId}
           sidebarOpen={sidebarOpen}
+          handleSetHost={handleSetHost}
           toggleSidebar={this.toggleSidebar}
           handleUpdateUsername={handleUpdateUsername}
+          user={user}
           users={users}
         />
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
           <SidebarHeader
-            isConnected={isConnected}
-            roomId={roomId}
-            title={title}
+            roomName={room.name}
             toggleSidebar={this.toggleSidebar}
           />
           <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex="0">
@@ -68,11 +67,13 @@ class SidebarLayout extends Component {
 SidebarLayout.propTypes = {
   canReset: PropTypes.bool,
   children: PropTypes.node,
+  handleUpdateUsername: PropTypes.func,
   isConnected: PropTypes.bool,
   isHost: PropTypes.bool,
   resetVideoUrl: PropTypes.func,
-  roomId: PropTypes.string,
+  room: PropTypes.object,
   title: PropTypes.string,
+  users: PropTypes.array,
 }
 
 export default SidebarLayout

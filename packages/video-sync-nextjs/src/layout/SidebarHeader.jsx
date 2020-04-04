@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 import BrokenLink from '@icons/brokenLink'
 
 const SidebarHeader = ({
-  isConnected, roomName: givenRoomName = "Party!", toggleSidebar,
+  roomName: givenRoomName,
+  toggleSidebar,
 }) => {
   const [roomName, setRoomName] = useState(givenRoomName)
 
@@ -18,21 +19,14 @@ const SidebarHeader = ({
         </svg>
       </button>
 
-      <h1 className="mt-2.5 text-lg italic font-bold self-center">
-        {roomName}
+      <h1 className="text-lg italic font-bold self-center">
+        {givenRoomName}
       </h1>
-
-      <div className={`mt-3 pr-4`}>
-        <div className={`${isConnected ? 'hidden' : 'blinking'}`}>
-          <BrokenLink />
-        </div>
-      </div>
     </div>
   )
 }
 
 SidebarHeader.propTypes = {
-  isConnected: PropTypes.bool,
   toggleSidebar: PropTypes.func,
 }
 
