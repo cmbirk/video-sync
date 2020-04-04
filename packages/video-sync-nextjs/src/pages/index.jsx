@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import Link from 'next/link'
 import Head from 'next/head'
 import Router, { useRouter } from 'next/router'
 import fetch from 'isomorphic-unfetch'
@@ -14,7 +15,9 @@ const Home = () => {
 
   const setRoomId = () => {
     // const router = useRouter()
-    Router.replace(`/rooms/${roomId}`)
+    if (typeof window !== 'undefined') {
+      window.location.replace('/rooms/b6CnJp3fUn0KE2s1SXVw')
+    }
   }
 
   const getRoomId = async () => {
@@ -67,9 +70,11 @@ const Home = () => {
               placeholder="Enter your room ID"
             />
             <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-              <button className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-                Go to room &gt;&gt;
-              </button>
+              <Link href={`/rooms/${roomId}`}>
+                <a className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                  Go to room &gt;&gt;
+                </a>
+              </Link>
             </div>
           </form>
           <p className="my-8 ml-4">Or</p>
