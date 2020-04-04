@@ -10,6 +10,7 @@ const Sidebar = ({
   handleKick,
   handleSetHost,
   handleUpdateUsername,
+  hostId,
   isHost,
   resetVideoUrl,
   roomId,
@@ -69,6 +70,7 @@ const Sidebar = ({
                    }
                 </span>
                 <UserList
+                  hostId={hostId}
                   isHost={isHost}
                   users={users}
                   handleKick={handleKick}

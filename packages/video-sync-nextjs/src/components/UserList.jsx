@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const UserList = ({
+  hostId,
   isHost,
   handleKick,
   handleSetHost,
@@ -17,7 +18,8 @@ const UserList = ({
             className="group"
             key={id}
           >
-            <span>{ online ? '⚡️' : '🚫'}</span>{username}
+            <span>{ online ? '⚡️' : '🚫'}</span>
+            <span className={`${id === hostId ? 'font-bold': ''}`}>{username}</span>
             { isHost
               ? (
                 <>

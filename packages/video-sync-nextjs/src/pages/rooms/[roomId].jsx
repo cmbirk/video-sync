@@ -53,9 +53,18 @@ class Room extends Component {
     let userId = localStorage.getItem('userId')
 
     if (userId) {
-      user = await this.roomRef.collection('users').doc(userId).update({
-        online: true,
-      })
+      try {
+        user = await this.roomRef.collection('users').doc(userId).update({
+          online: true,
+        })
+      } catch (err) {
+        user = await this.roomRef.collection('users').add({
+          username: 'unknown',
+          online: true,
+        })
+
+        userId = user.id
+      }
     } else {
       user = await this.roomRef.collection('users').add({
         username: 'unknown',
@@ -71,9 +80,11 @@ class Room extends Component {
 
     this.roomRef.collection('users')
       .onSnapshot((usersQuery) => {
+        const { room: roomData } = this.state
         const userSnapshot = usersQuery.docs
         const users = userSnapshot.map((userRef) => {
           const refData = userRef.data()
+
           return {
             id: userRef.id,
             ...refData,
@@ -85,11 +96,10 @@ class Room extends Component {
         // This user is no longer in the room
         if (!userIds.includes(userId)) {
           localStorage.removeItem('userId')
+          window.removeEventListener('beforeunload', this.unloadHandler)
           console.error('You have been kicked!')
           Router.push('/')
         }
-
-        const { room: roomData } = this.state
 
         if (!roomData.hostId) {
           this.roomRef.update({ hostId: users[0].id })
@@ -101,16 +111,16 @@ class Room extends Component {
     this.setupBeforeUnloadListener()
   }
 
-  setupBeforeUnloadListener = () => {
+  unloadHandler = async (/* e */) => {
     const { userId } = this.state
 
-    window.addEventListener('beforeunload', async (e) => {
-      e.preventDefault()
-      await this.roomRef.collection('users').doc(userId).update({
-        online: false,
-      })
-      e.invokeDefault()
+    return this.roomRef.collection('users').doc(userId).update({
+      online: false,
     })
+  }
+
+  setupBeforeUnloadListener = () => {
+    window.addEventListener('beforeunload', this.unloadHandler)
   }
 
   isHost = () => {
@@ -238,6 +248,7 @@ class Room extends Component {
 
   render() {
     const {
+      hostId,
       room,
       users = [],
     } = this.state

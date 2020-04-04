@@ -44,6 +44,7 @@ class SidebarLayout extends Component {
           sidebarOpen={sidebarOpen}
           handleKick={handleKick}
           handleSetHost={handleSetHost}
+          hostId={room.hostId}
           toggleSidebar={this.toggleSidebar}
           handleUpdateUsername={handleUpdateUsername}
           user={user}
