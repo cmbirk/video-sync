@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import Link from 'next/link'
 import Head from 'next/head'
-import Router, { useRouter } from 'next/router'
+import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
 import firebase from '@services/firebase'
@@ -12,13 +12,6 @@ import Button from '@components/Button'
 
 const Home = () => {
   const [roomId, updateRoomId] = useState('')
-
-  const setRoomId = () => {
-    // const router = useRouter()
-    if (typeof window !== 'undefined') {
-      window.location.replace('/rooms/b6CnJp3fUn0KE2s1SXVw')
-    }
-  }
 
   const getRoomId = async () => {
     const { apiurl } = process.env
@@ -70,7 +63,9 @@ const Home = () => {
               placeholder="Enter your room ID"
             />
             <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-              <Link href={`/rooms/${roomId}`}>
+              <Link
+                href="/rooms/[roomId]"
+                as={`/rooms/${roomId}`}>
                 <a className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
                   Go to room &gt;&gt;
                 </a>
