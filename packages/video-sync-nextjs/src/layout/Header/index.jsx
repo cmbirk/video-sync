@@ -57,7 +57,7 @@ const Header = () => {
               <h1 className="self-center">Stuck Inside</h1>
             </div>
             <SignInLink
-              className="flex-1 flex content-end"
+              className={`${currentUser ? 'hidden' : ''} flex-1 flex content-end`}
             />
           </div>
           <HeaderProfile
