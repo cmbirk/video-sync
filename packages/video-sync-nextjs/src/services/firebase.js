@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 
+import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/analytics'
 
@@ -18,5 +19,23 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
 }
 
+const auth = firebase.auth()
+export const firestore = firebase.firestore()
 
-export default firebase
+export const getCurrentUser = () =>
+  auth.currentUser
+
+export const createUserWithEmailAndPassword = (email, password) =>
+  auth.createUserWithEmailAndPassword(email, password)
+
+export const signInWithEmailAndPassword = (email, password) =>
+  auth.signInWithEmailAndPassword(email, password)
+
+export const signOut = () =>
+  auth.signOut()
+
+export const sendPasswordResetEmail = (email) =>
+  auth.sendPasswordResetEmail(email)
+
+export const updatePassword = (password) =>
+  auth.currentUser.updatePassword(password)

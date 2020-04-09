@@ -5,9 +5,9 @@ import Head from 'next/head'
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
-import firebase from '@services/firebase'
+import { firestore } from '@services/firebase'
 
-import HeroLayout from '@layout/HeroLayout'
+import Layout from '@layout/Layout'
 import Button from '@components/Button'
 
 const Home = () => {
@@ -25,9 +25,7 @@ const Home = () => {
     let roomRef
 
     if (typeof window !== 'undefined') {
-      const db = firebase.firestore()
-
-      roomRef = await db.collection('Rooms').add({
+      roomRef = await firestore.collection('Rooms').add({
         roomId: newRoom,
         name: 'unknown',
         currentTime: 0,
@@ -39,11 +37,7 @@ const Home = () => {
   }
 
   return (
-    <HeroLayout>
-      <Head>
-        <title>Power Hour 🍻</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
       <div className="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 flex justify-center">
         <div className="text-center">
           <h2 className="w-full text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
@@ -51,10 +45,12 @@ const Home = () => {
           </h2>
           <form
             className="mt-8 sm:flex"
-            onSubmit={() => setRoomId()}
+            onSubmit={() =>
+              setRoomId()}
           >
             <input
-              onChange={(e) => updateRoomId(e.target.value)}
+              onChange={(e) =>
+                updateRoomId(e.target.value)}
               value={roomId}
               aria-label="Room Id"
               type="text"
@@ -80,7 +76,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </HeroLayout>
+    </Layout>
   )
 }
 

@@ -18,7 +18,7 @@ class VideoSync extends App {
         <Head>
           <title>Stuck Inside</title>
           <meta name="description" content="Stuck Inside? Play videos with friends!" />
-          <link rel="icon" href="/replay.svg" />
+          <link rel="icon" href="/home.svg" />
         </Head>
         <Component {...pageProps} />
       </UserContext.Provider>
