@@ -10,7 +10,8 @@ const sizes = {
 
 const Button = ({
   alt, children, className = '', onClick, size = 'default',
-}) => (
+}) =>
+  (
     <button
       type="button"
       onClick={onClick}
@@ -26,7 +27,7 @@ const Button = ({
     >
       {children}
     </button>
-)
+  )
 
 Button.propTypes = {
   alt: PropTypes.string,
