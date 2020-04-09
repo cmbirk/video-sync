@@ -12,6 +12,7 @@ module.exports = {
           '@icons': './src/icons',
           '@layout': './src/layout',
           '@services': './src/services',
+          '@utils': './src/utils',
         },
       },
     ],
