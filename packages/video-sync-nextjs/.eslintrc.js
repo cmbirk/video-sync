@@ -37,7 +37,8 @@ module.exports = {
     // 'jest',
   ],
   rules: {
-    semi: 'off'
+    semi: 'off',
+    'implicit-arrow-linebreak': ['error', 'below'],
   },
   settings: {
     "import/resolver": {
