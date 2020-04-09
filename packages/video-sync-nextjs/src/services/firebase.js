@@ -20,6 +20,9 @@ if (firebase.apps.length === 0) {
 }
 
 export const auth = firebase.auth()
+
+// auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+
 export const firestore = firebase.firestore()
 
 export const createUserWithGoogleAuth = async () => {
@@ -55,3 +58,5 @@ export const sendPasswordResetEmail = (email) =>
 
 export const updatePassword = (password) =>
   auth.currentUser.updatePassword(password)
+
+export default firebase

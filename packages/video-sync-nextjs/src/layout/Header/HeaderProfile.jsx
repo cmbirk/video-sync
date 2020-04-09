@@ -22,10 +22,6 @@ const HeaderProfile = ({ className }) => {
     }
   }, [ref])
 
-  const signOut = () => {
-    console.log('Signing Out')
-  }
-
   return (
     <UserContext.Consumer>
       {({ logout }) => {

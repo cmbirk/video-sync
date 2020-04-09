@@ -7,7 +7,7 @@ import Document, {
 } from 'next/document'
 
 class CustomDocument extends Document {
-  getInitialProps = async (ctx) => {
+  getInitialProps = async ({ ctx }) => {
     const AuthUserInfo = get(ctx, 'myCustomData.AuthUserInfo', null)
 
     const initialProps = await Document.getInitialProps(ctx)

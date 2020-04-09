@@ -6,11 +6,12 @@ import fetch from 'isomorphic-unfetch'
 
 import { firestore } from '@services/firebase'
 
+import { withAuthUser, withAuthUserInfo } from '@utils/wrappers'
+
 import Layout from '@layout/Layout'
-import Button from '@components/Button'
 import IntroHero from '@components/content/IntroHero'
 
-const Home = () => {
+const Home = ({ AuthUserInfo }) => {
   const [roomId, updateRoomId] = useState('')
 
   const getRoomId = async () => {
@@ -37,10 +38,11 @@ const Home = () => {
   }
 
   return (
-    <Layout>
+    <Layout user={AuthUserInfo}>
       <IntroHero />
     </Layout>
   )
 }
 
+//export default withAuthUser(withAuthUserInfo(Home))
 export default Home

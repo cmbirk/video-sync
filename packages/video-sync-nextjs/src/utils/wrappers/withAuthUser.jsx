@@ -22,7 +22,14 @@ export default (ComposedComponent) => {
   }
 
   WithAuthUserComp.getInitialProps = async (ctx) => {
-    const { req, res } = ctx
+    let res
+    let req
+
+    if (!ctx.req) {
+      ({ ctx: { req, res }} = ctx)
+    } else {
+      ({ req, res } = ctx)
+    }
 
     let AuthUserInfo
 
