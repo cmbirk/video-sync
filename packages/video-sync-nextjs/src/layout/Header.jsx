@@ -2,7 +2,8 @@ import React from 'react'
 
 import Link from 'next/link'
 
-const Header = () => (
+const Header = () =>
+  (
   <>
   <header className="sticky top-0 bg-white">
     <div className="container flex flex-col sm:flex-row justify-between items-center mx-auto py-4 px-8 absolute">
@@ -18,6 +19,6 @@ const Header = () => (
     </div>
   </header>
   </>
-)
+  )
 
 export default Header
