@@ -2,7 +2,7 @@ import React from 'react'
 import App from 'next/app'
 import Head from 'next/head'
 
-import { createUserWithGoogleAuth, signOut } from '@services/firebase'
+// import { createUserWithGoogleAuth, signOut } from '@services/firebase'
 
 import '../styles.css'
 import UserContext from '@contexts/UserContext'
@@ -13,14 +13,14 @@ class VideoSync extends App {
   }
 
   logout = async () => {
-    await signOut()
-    this.setState({ user: {} })
+    // await signOut()
+    // this.setState({ user: {} })
   }
 
   login = async () => {
-    const { user } = await createUserWithGoogleAuth()
+    // const { user } = await createUserWithGoogleAuth()
 
-    this.setState({ user })
+    // this.setState({ user })
   }
 
   render() {
