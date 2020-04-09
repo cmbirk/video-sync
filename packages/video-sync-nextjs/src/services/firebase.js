@@ -22,6 +22,22 @@ if (firebase.apps.length === 0) {
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()
 
+export const createUserWithGoogleAuth = async () => {
+  const provider = new firebase.auth.GoogleAuthProvider()
+
+  const result = await auth.signInWithPopup(provider)
+  console.log(result)
+  const { accessToken } = result.credential
+  const { user } = result
+
+  console.log(user, accessToken)
+
+  return {
+    accessToken,
+    user,
+  }
+}
+
 export const getCurrentUser = () =>
   auth.currentUser
 
@@ -31,7 +47,7 @@ export const createUserWithEmailAndPassword = (email, password) =>
 export const signInWithEmailAndPassword = (email, password) =>
   auth.signInWithEmailAndPassword(email, password)
 
-export const signOut = () =>
+export const signOut = async () =>
   auth.signOut()
 
 export const sendPasswordResetEmail = (email) =>
