@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const HomeIcon = ({ className = '' }) =>
-(
+  (
   <svg
     className={`${className} h-6 w-6`}
     viewBox="0 0 90.81386160663541 60"
@@ -15,6 +16,10 @@ const HomeIcon = ({ className = '' }) =>
         <path d="M47.281 40.474h17v29h-17z"></path>
     </g>
   </svg>
-)
+  )
+
+HomeIcon.propTypes = {
+  className: PropTypes.string,
+}
 
 export default HomeIcon

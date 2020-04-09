@@ -214,7 +214,7 @@ class Room extends Component {
       return false
     }
 
-    this.roomRef.collection('users').doc(id).delete()
+    return this.roomRef.collection('users').doc(id).delete()
   }
 
   handleSetHost = (hostId) => {
@@ -251,7 +251,6 @@ class Room extends Component {
 
   render() {
     const {
-      hostId,
       room,
       users = [],
     } = this.state

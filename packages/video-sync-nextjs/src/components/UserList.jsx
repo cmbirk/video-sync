@@ -57,6 +57,7 @@ const UserList = ({
 UserList.propTypes = {
   handleKick: PropTypes.func,
   handleSetHost: PropTypes.func,
+  hostId: PropTypes.string,
   isHost: PropTypes.bool,
   users: PropTypes.array,
 }

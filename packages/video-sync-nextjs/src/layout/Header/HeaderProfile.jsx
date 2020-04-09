@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 
 const HeaderProfile = ({ className }) => {
   const [open, setOpen] = useState(false)
@@ -68,6 +69,10 @@ const HeaderProfile = ({ className }) => {
       </div>
     </div>
   )
+}
+
+HeaderProfile.propTypes = {
+  className: PropTypes.string,
 }
 
 export default HeaderProfile

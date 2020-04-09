@@ -33,6 +33,8 @@ class Player extends Component {
     if (currentTime !== playerTime) {
       this.player.seekTo(currentTime)
     }
+
+    return true
   }
 
   handleProgress = (data) => {
@@ -43,7 +45,7 @@ class Player extends Component {
     console.log('Progess.')
     console.log(data)
 
-    handleProgress(data)
+    return handleProgress(data)
   }
 
   handleSeek = (seconds) => {
@@ -52,7 +54,7 @@ class Player extends Component {
 
     this.seeking = true
 
-    handleSeek(seconds)
+    return handleSeek(seconds)
   }
 
   ref = (player) => {
@@ -66,10 +68,8 @@ class Player extends Component {
   render() {
     const {
       className,
-      currentTime,
       handlePause,
       handlePlay,
-      isHost = false,
       url,
       playing = false,
     } = this.props
@@ -96,10 +96,14 @@ class Player extends Component {
 }
 
 Player.propTypes = {
+  className: PropTypes.string,
+  currentTime: PropTypes.number,
   handlePause: PropTypes.func,
   handlePlay: PropTypes.func,
+  handleProgress: PropTypes.func,
   handleSeek: PropTypes.func,
   isHost: PropTypes.bool,
+  playing: PropTypes.bool,
   setPlayer: PropTypes.func,
   url: PropTypes.string,
 }

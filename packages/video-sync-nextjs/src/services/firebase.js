@@ -19,7 +19,7 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
 }
 
-const auth = firebase.auth()
+export const auth = firebase.auth()
 export const firestore = firebase.firestore()
 
 export const getCurrentUser = () =>
