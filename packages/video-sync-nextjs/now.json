@@ -9,7 +9,9 @@
       "storagebucket": "@storagebucket",
       "messagingsenderid": "@messagingsenderid",
       "appid": "@appid",
-      "measurementid": "@measurementid"
+      "measurementid": "@measurementid",
+      "session_secret_current": "someSecret",
+      "session_secret_previous": "someOtherSecret"
     }
   }
 }
