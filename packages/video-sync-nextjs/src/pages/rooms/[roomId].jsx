@@ -224,7 +224,7 @@ class Room extends Component {
   }
 
   handleRoomNameChange = (roomName) => {
-    this.roomRef.update({ name: roomName })
+    // this.roomRef.update({ name: roomName })
   }
 
   handleUpdateUsername = async (username) => {
