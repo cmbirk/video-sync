@@ -26,7 +26,7 @@ export default (ComposedComponent) => {
     let req
 
     if (!ctx.req) {
-      ({ ctx: { req, res }} = ctx)
+      ({ ctx: { req, res } } = ctx)
     } else {
       ({ req, res } = ctx)
     }

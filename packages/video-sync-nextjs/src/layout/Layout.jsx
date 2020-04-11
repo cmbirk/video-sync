@@ -7,7 +7,7 @@ const Layout = ({ children }) =>
   (
     <>
       <Header />
-      <div id="wrapper" className="container mx-auto flex flex-col min-h-screen relative justify-center">
+      <div id="wrapper" className="container mx-auto flex flex-col relative justify-center">
         {/* <Header /> */}
         <main className="text-gray-900 mb-4">{children}</main>
         {/* <Footer /> */}

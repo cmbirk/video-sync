@@ -11,38 +11,14 @@ import { withAuthUser, withAuthUserInfo } from '@utils/wrappers'
 import Layout from '@layout/Layout'
 import IntroHero from '@components/content/IntroHero'
 
-const Home = ({ AuthUserInfo }) => {
-  const [roomId, updateRoomId] = useState('')
-
-  const getRoomId = async () => {
-    const { apiurl } = process.env
-
-    const res = await fetch(`${apiurl}/rooms`)
-
-    const data = await res.json()
-
-    const { newRoom } = data
-
-    let roomRef
-
-    if (typeof window !== 'undefined') {
-      roomRef = await firestore.collection('Rooms').add({
-        roomId: newRoom,
-        name: 'unknown',
-        currentTime: 0,
-      })
-    }
-
-    Router.push(`/rooms/${roomRef.id}`)
-    // Router.push(`/rooms/${newRoom}`)
-  }
-
-  return (
+const Home = ({ AuthUserInfo, toggleSigningIn }) =>
+  (
     <Layout user={AuthUserInfo}>
-      <IntroHero />
+      <IntroHero
+        toggleSigningIn={toggleSigningIn}
+      />
     </Layout>
   )
-}
 
-//export default withAuthUser(withAuthUserInfo(Home))
+// export default withAuthUser(withAuthUserInfo(Home))
 export default Home

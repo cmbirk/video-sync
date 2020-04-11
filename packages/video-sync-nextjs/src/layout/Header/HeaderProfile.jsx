@@ -24,8 +24,8 @@ const HeaderProfile = ({ className }) => {
 
   return (
     <UserContext.Consumer>
-      {({ logout }) => {
-        return (
+      {({ logout }) =>
+        (
           <div className={`${className} absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
             <button className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
               <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -69,8 +69,7 @@ const HeaderProfile = ({ className }) => {
               </div>
             </div>
           </div>
-        )
-      }}
+        )}
     </UserContext.Consumer>
   )
 }

@@ -44,13 +44,7 @@ const Header = () => {
             </button>
           </div>
           <div className="flex-1 flex items-center justify-between items-stretch">
-            <div className="hidden sm:block sm:ml-6 flex-1">
-              <div className="flex">
-                <a href="#" className="px-3 py-2 rounded-md text-sm font-medium leading-5 text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Home</a>
-                <a href="#" className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Profile</a>
-              </div>
-            </div>
-            <div className="flex flex-col text-gray-300 self-center flex-1">
+            <div className="flex flex-col text-gray-300 self-center flex-shrink">
               <HomeIcon
                 className="self-center"
               />
