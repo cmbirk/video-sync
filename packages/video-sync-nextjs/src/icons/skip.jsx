@@ -3,7 +3,7 @@ import React from 'react'
 const Skip = ({ className }) => (
 <svg
   className={`${className} w-4 h-4`}
-	 viewBox="0 0 512 512" style={{ 'enable-background':'new 0 0 512 512' }}>
+	 viewBox="0 0 512 512" style={{ enableBackground:'new 0 0 512 512' }}>
   <g>
   	<g>
   		<path d="M374.284,118.284l-59.588,59.588L392.823,256l-78.127,78.127l59.588,59.588L512,256L374.284,118.284z M335.883,334.127

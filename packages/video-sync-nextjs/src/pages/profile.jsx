@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
-
-import Router from 'next/router'
+import React, { useEffect, useState } from 'react'
 
 import Layout from '@layout/Layout'
 
@@ -9,19 +7,27 @@ import { getCurrentUser } from '@services/firebase'
 const currentUser = getCurrentUser()
 
 const ProfilePage = () => {
-  console.log(currentUser)
-
-  if (!currentUser) {
-    Router.push('/signin')
+  const initValues = {
+    email: '',
+    firstName: '',
+    lastName: '',
   }
 
-  const { email } = currentUser
+  const [values, setValues] = useState(initValues)
 
-  const [values, setValues] = useState({ email })
-
-  const handlePersonalInfoSubmit = () => {
+  const handlePersonalInfoSubmit = (e) => {
+    e.preventDefault()
     console.log('submitting personal info!')
+    console.log(values)
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      const { email } = currentUser
+
+      setValues({ ...values, email })
+    }
+  }, [currentUser])
 
   return (
     <Layout
@@ -137,13 +143,20 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form onSubmit={() => handlePersonalInfoSubmit() }>
+            <form onSubmit={(e) =>
+              handlePersonalInfoSubmit(e) }>
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="first_name" className="block text-sm font-medium leading-5 text-gray-700">First name</label>
-                      <input id="first_name" className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                      <input
+                        id="first_name"
+                        className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        value={values.firstName}
+                        onChange={(e) =>
+                          setValues({ ...values, firstName: e.target.value })}
+                      />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
