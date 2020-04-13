@@ -9,22 +9,20 @@ import SocialFriends from '@icons/social_friends'
 import { getCurrentUser } from '@services/firebase'
 
 const IntroHero = () => {
-  let ButtonContent =
-    (
+  let ButtonContent = (
       <Link href="/signin">
         <Button size="lg">
           Sign In
         </Button>
       </Link>
-    )
+  )
 
   if (getCurrentUser()) {
-    ButtonContent =
-      (
+    ButtonContent = (
       <Button size="lg">
         Ready?
       </Button>
-      )
+    )
   }
 
   return (
