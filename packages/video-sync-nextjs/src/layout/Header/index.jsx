@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 import { getCurrentUser } from '@services/firebase'
 // import Link from 'next/link'
@@ -45,10 +46,14 @@ const Header = () => {
           </div>
           <div className="flex-1 flex items-center justify-between items-stretch">
             <div className="flex flex-col text-gray-300 self-center flex-shrink">
-              <HomeIcon
-                className="self-center"
-              />
-              <h1 className="self-center">Stuck Inside</h1>
+              <Link href="/">
+                <a>
+                  <HomeIcon
+                    className="self-center"
+                  />
+                  <h1 className="self-center">Stuck Inside</h1>
+                </a>
+              </Link>
             </div>
             <SignInLink
               className={`${currentUser ? 'hidden' : ''} flex-1 flex content-end`}

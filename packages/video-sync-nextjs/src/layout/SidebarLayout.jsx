@@ -30,8 +30,16 @@ class SidebarLayout extends Component {
       resetVideoUrl,
       room,
       user,
-      users,
+      users = [],
     } = this.props
+
+    let hostId = null
+    let roomName = null
+
+    if (room) {
+      ({ hostId, name: roomName } = room)
+    }
+
 
     const { sidebarOpen } = this.state
 
@@ -44,7 +52,7 @@ class SidebarLayout extends Component {
           sidebarOpen={sidebarOpen}
           handleKick={handleKick}
           handleSetHost={handleSetHost}
-          hostId={room.hostId}
+          hostId={hostId}
           toggleSidebar={this.toggleSidebar}
           handleUpdateUsername={handleUpdateUsername}
           user={user}
@@ -53,10 +61,10 @@ class SidebarLayout extends Component {
         <div className="flex flex-col w-0 flex-1 overflow-hidden">
           <SidebarHeader
             handleRoomNameChange={handleRoomNameChange}
-            roomName={room.name}
+            roomName={roomName}
             toggleSidebar={this.toggleSidebar}
           />
-          <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex="0">
+          <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none bg-gray-200 p-10" tabIndex="0">
             <div className="w-full border-l h-full">
               {/* <!-- Replace with your content --> */}
               {children}

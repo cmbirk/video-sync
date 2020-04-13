@@ -13,7 +13,7 @@ const firebaseAuthConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
-  signInSuccessUrl: '/',
+  signInSuccessUrl: '/profile',
 }
 
 const Signin = () => {

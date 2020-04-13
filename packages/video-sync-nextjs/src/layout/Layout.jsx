@@ -7,7 +7,9 @@ const Layout = ({ children }) =>
   (
     <>
       <Header />
-      <div id="wrapper" className="container mx-auto flex flex-col relative justify-center">
+      <div
+        id="wrapper"
+        className="container mx-auto flex flex-col relative justify-center py-10 bg-gray-200">
         {/* <Header /> */}
         <main className="text-gray-900 mb-4">{children}</main>
         {/* <Footer /> */}
