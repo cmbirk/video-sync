@@ -19,7 +19,8 @@ const RoomName = ({
   return (
     <>
       { editing ? (
-          <form onSubmit={() => saveRoomName()}>
+          <form onSubmit={() =>
+            saveRoomName()}>
             <input
               autoFocus
               type="text"
@@ -31,7 +32,7 @@ const RoomName = ({
       ) : (
           <h1
             className="text-lg italic font-bold self-center cursor-pointer"
-            onClick={() => {setEditing(true)}}
+            onClick={() => { setEditing(true) }}
           >
             {roomName}
           </h1>

@@ -1,6 +1,7 @@
 import React from 'react'
 
-const BrokenLink = () => (
+const BrokenLink = () =>
+  (
   <svg className="h-6 w-6" viewBox="0 0 501.195 501.195" fill="currentColor">
     <g>
       <path d="M238.868,235.641l-23.979-6.624l-14.528-23.639l-7.809,7.812c-28.625-13.398-63.842-8.296-87.444,15.308l-82.512,82.526
@@ -18,6 +19,6 @@ const BrokenLink = () => (
         l17.389,32.717l18.692,2.49l12.569,20.446l-7.076,7.07l-11.365-18.49L170.895,183.389z"/>
     </g>
   </svg>
-)
+  )
 
 export default BrokenLink

@@ -12,7 +12,8 @@ const VideoForm = (props) => {
   const handleInputChange = (event) => {
     event.persist()
 
-    setInputs((formInputs) => ({ ...formInputs, [event.target.name]: event.target.value }))
+    setInputs((formInputs) =>
+      ({ ...formInputs, [event.target.name]: event.target.value }))
   }
 
   const handleSubmit = (event) => {

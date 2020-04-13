@@ -28,7 +28,8 @@ const Username = ({
         { editing
           ? (
             <div className="ml-3">
-              <form onSubmit={() => saveUsername() }>
+              <form onSubmit={() =>
+                saveUsername() }>
                 <input autoFocus type="text" onChange={(event) => {
                   updateUsername(event.target.value)
                 }} value={username}/>

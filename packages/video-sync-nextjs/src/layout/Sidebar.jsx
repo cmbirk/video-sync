@@ -18,7 +18,8 @@ const Sidebar = ({
   toggleSidebar,
   user,
   users,
-}) => (
+}) =>
+  (
     <>
       {/* <!-- Off-canvas menu for mobile --> */}
       <div className={`${sidebarOpen ? '' : 'hidden'}`}>
@@ -29,7 +30,8 @@ const Sidebar = ({
           <div x-show="sidebarOpen" className="flex-1 flex flex-col max-w-xs w-full bg-white transform ease-in-out duration-300 ">
             <div className="absolute top-0 right-0 -mr-14 p-1">
               <button
-                onClick={() => toggleSidebar()}
+                onClick={() =>
+                  toggleSidebar()}
                 x-show="sidebarOpen"
                 aria-label="Close sidebar"
                 className="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
@@ -91,7 +93,7 @@ const Sidebar = ({
         </div>
       </div>
     </>
-)
+  )
 
 Sidebar.propTypes = {
   canReset: PropTypes.bool,

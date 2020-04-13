@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import SidebarLayout from '@layout/SidebarLayout'
 import { Player, VideoForm } from '@components'
 
-import firebase from '@services/firebase'
+import { firestore } from '@services/firebase'
 
 class Room extends Component {
   state = {
@@ -24,9 +24,7 @@ class Room extends Component {
     const { router } = this.props
     const { roomId } = router.query
 
-    const db = firebase.firestore()
-
-    this.roomRef = db.collection('Rooms').doc(roomId)
+    this.roomRef = firestore.collection('Rooms').doc(roomId)
 
     const room = await this.roomRef.get()
 
@@ -94,7 +92,8 @@ class Room extends Component {
           }
         })
 
-        const userIds = users.map((u) => u.id)
+        const userIds = users.map((u) =>
+          u.id)
 
         // This user is no longer in the room
         if (!userIds.includes(userId)) {
@@ -139,7 +138,8 @@ class Room extends Component {
   user = () => {
     const { users, userId } = this.state
 
-    const found = users.filter((u) => u.id === userId)
+    const found = users.filter((u) =>
+      u.id === userId)
 
     return found[0]
   }
@@ -214,7 +214,7 @@ class Room extends Component {
       return false
     }
 
-    this.roomRef.collection('users').doc(id).delete()
+    return this.roomRef.collection('users').doc(id).delete()
   }
 
   handleSetHost = (hostId) => {
@@ -251,7 +251,6 @@ class Room extends Component {
 
   render() {
     const {
-      hostId,
       room,
       users = [],
     } = this.state

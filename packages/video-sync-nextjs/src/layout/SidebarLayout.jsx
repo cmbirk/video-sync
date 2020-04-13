@@ -57,7 +57,7 @@ class SidebarLayout extends Component {
             toggleSidebar={this.toggleSidebar}
           />
           <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex="0">
-            <div className="w-full bg-tiled border-l h-full">
+            <div className="w-full border-l h-full">
               {/* <!-- Replace with your content --> */}
               {children}
               {/* <!-- /End replace --> */}
