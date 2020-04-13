@@ -1,17 +1,21 @@
 import React from 'react'
 
+import Link from 'next/link'
+
 import { Button } from '@components'
 
 import SocialFriends from '@icons/social_friends'
 
 import { getCurrentUser } from '@services/firebase'
 
-const IntroHero = ({ toggleSigningIn }) => {
+const IntroHero = () => {
   let ButtonContent =
     (
-      <Button size="lg" onClick={() => { toggleSigningIn(true) }}>
-        Sign In
-      </Button>
+      <Link href="/signin">
+        <Button size="lg">
+          Sign In
+        </Button>
+      </Link>
     )
 
   if (getCurrentUser()) {
