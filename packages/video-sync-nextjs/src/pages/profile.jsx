@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import Router from 'next/router'
 
 import Layout from '@layout/Layout'
 
@@ -8,6 +10,18 @@ const currentUser = getCurrentUser()
 
 const ProfilePage = () => {
   console.log(currentUser)
+
+  if (!currentUser) {
+    Router.push('/signin')
+  }
+
+  const { email } = currentUser
+
+  const [values, setValues] = useState({ email })
+
+  const handlePersonalInfoSubmit = () => {
+    console.log('submitting personal info!')
+  }
 
   return (
     <Layout
@@ -123,7 +137,7 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form onSubmit={() => handlePersonalInfoSubmit() }>
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -139,7 +153,13 @@ const ProfilePage = () => {
 
                     <div className="col-span-6 sm:col-span-4">
                       <label htmlFor="email_address" className="block text-sm font-medium leading-5 text-gray-700">Email address</label>
-                      <input id="email_address" className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                      <input
+                        id="email_address"
+                        className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        value={values.email}
+                        onChange={(e) =>
+                          setValues({ ...values, email: e.target.value })}
+                      />
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">

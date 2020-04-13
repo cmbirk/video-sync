@@ -9,7 +9,6 @@ const Sidebar = ({ className }) => {
   const [open, setOpen] = useState(true)
 
   const handleSidebarClick = () => {
-    console.log(open)
     if (open) return false
 
     return setOpen(true)
