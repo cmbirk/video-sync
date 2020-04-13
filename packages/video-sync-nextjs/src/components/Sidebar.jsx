@@ -9,7 +9,8 @@ const Sidebar = ({ className }) => {
   const [open, setOpen] = useState(true)
 
   const handleSidebarClick = () => {
-    if (!open) return false
+    console.log(open)
+    if (open) return false
 
     return setOpen(true)
   }
@@ -30,7 +31,7 @@ const Sidebar = ({ className }) => {
         }
       </div>
       <div
-        className={`${className} ${open ? 'flex-1 px-10' : closedClasses} cursor: bg-gray-400 min-h-full left-0`}
+        className={`${className} ${open ? 'flex-1 px-10' : closedClasses} cursor bg-gray-400 min-h-full left-0`}
         onClick={() =>
           handleSidebarClick()}
       >
